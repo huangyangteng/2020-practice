@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-practice</title>
+    <style>
+        #canvas{
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="600">
+    </canvas>
+    <img src="" alt="" id="img">
+    <script>
+        // canvas 2个属性 3个方法
+        function canvasElementApi(canvas){
+            console.log("canvasElementApi -> canvas.width", canvas.width)
+            console.log("canvasElementApi -> canvas.height", canvas.height)
+            console.log("canvasElementApi -> canvas.getContext('2d')", canvas.getContext('2d'))
+            document.getElementById('img').src=canvas.toDataURL('image/jpeg',0.9)
+        }
+        // canvas context的属性和方法
+        function canvasContextApi(context){
+            console.log("canvasContextApi -> context", context)
+        }
+        // 图案
+        function pattern(){
+
+        }
+        //渐变
+        function gradient(ctx,type){
+            const canvas=ctx.canvas
+            // createLinearGradient(x0,y0,x1,y1)
+            if(type=='linear'){//线性渐变
+                const gradient=ctx.createLinearGradient(0,0,canvas.width,0)
+                gradient.addColorStop(0,'blue')
+                gradient.addColorStop(0.25,'red')
+                gradient.addColorStop(0.5,'yellow')
+                gradient.addColorStop(0.75,'purple')
+                gradient.addColorStop(1,'green')
+                return gradient
+
+            }else if(type=='radial'){//放射渐变
+                //createRadialGradient(x0,y0,r0,x1,y1,r1)
+                const gradient=ctx.createRadialGradient(canvas.width/2,canvas.height,10,canvas.width/2,0,100)
+                gradient.addColorStop(0,'blue')
+                gradient.addColorStop(0.25,'red')
+                gradient.addColorStop(0.5,'yellow')
+                gradient.addColorStop(0.75,'purple')
+                gradient.addColorStop(1,'green')
+                return gradient
+            }
+            
+        }
+        // 绘制矩形
+        function drawRect(context){
+            // ---- 描边矩形
+            
+            // 普通颜色 
+            // context.strokeStyle='rgba(0,255,0,0.2)'
+            context.strokeStyle=gradient(context,'linear')
+
+            context.lineJoin='round'
+            context.lineWidth=20
+            context.strokeRect(10,10,100,100)
+
+
+            //---- 填充矩形
+
+            // context.fillStyle='rgba(255,0,0,0.2)'
+            //放射渐变
+            context.fillStyle=gradient(context,'radial')
+            context.fillRect(0,0,context.canvas.width,context.canvas.height)
+
+
+            // 清除矩形选中区域内容
+            context.clearRect(0,0,20,20)
+
+        }
+        ;(()=>{
+            const canvas=document.getElementById('canvas')
+            const context=canvas.getContext('2d')
+            // canvasElementApi(canvas)
+            // canvasContextApi(context)
+            drawRect(context)
+
+        })()
+    </script>
+</body>
+</html>
