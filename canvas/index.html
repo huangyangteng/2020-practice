@@ -80,12 +80,76 @@
             context.clearRect(0,0,20,20)
 
         }
+        // 绘制文本
+        function canvasDrawTextApi(context){
+            const canvas=context.canvas
+            // ----------绘制api strokeText(text,x,y)   fillText(text,x,y)   measureText(text)
+            // ---------canvas相关的属性   font  textAlign   textBaseline
+            context.font='128px Palatino'
+            context.lineWidth=1.0
+            context.fillStyle='green'
+            const TEXT_X=canvas.width/2
+            const TEXT_Y=canvas.height/2
+            
+            const _getGradient=()=>{
+                const gradient=context.createLinearGradient(0,0,canvas.width,canvas.height)
+                gradient.addColorStop(0,'blue')
+                gradient.addColorStop(0.25,'white')
+                gradient.addColorStop(0.5,'white')
+                gradient.addColorStop(0.75,'red')
+                gradient.addColorStop(1,'yellow')
+                return gradient
+            }
+            const drawText=(text,type='stroke')=>{
+                
+
+                context.strokeStyle='blue'
+                if(type==='stroke'){
+                    context.strokeText(text,TEXT_X,TEXT_Y)
+                }else{
+                context.fillText(text,TEXT_X,TEXT_Y)
+
+                }
+            }
+            const drawGradientText=(text,align='center',baseline='middle')=>{
+                context.fillStyle=_getGradient()
+                context.textAlign=align
+                context.textBaseline=baseline
+                context.fillText(text,TEXT_X,TEXT_Y)
+                // context.strokeText(text,TEXT_X,TEXT_Y)
+
+            }
+
+
+            const trunShadowsOn=()=>{
+                context.shadowColor='rgba(0,0,0,0.8)'
+                context.shadowOffsetX=5
+                context.shadowOffsetY=5
+                context.shadowBlur=10
+            }
+            
+
+
+
+            return {
+                drawText,
+                trunShadowsOn,
+                drawGradientText
+            }
+
+        }
+
+
+
         ;(()=>{
             const canvas=document.getElementById('canvas')
             const context=canvas.getContext('2d')
             // canvasElementApi(canvas)
             // canvasContextApi(context)
-            drawRect(context)
+            // drawRect(context)
+            const drawTextApi=canvasDrawTextApi(context)
+            drawTextApi.trunShadowsOn()
+            drawTextApi.drawGradientText('帅气',)
 
         })()
     </script>
