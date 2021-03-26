@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            position: relative;
+        }
+        .box-wrapper{
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .box{
+            height: 40px;
+            border:1px solid rebeccapurple;
+            border-radius: 4px;
+            width:400px;
+            display: inline-block;
+            margin-right: 80px;
+            margin-bottom: 20px;
+        }
+        .operator{
+            height: 40px;
+           background-color: aqua;
+            border-radius: 4px;
+            width:200px;
+            display: inline-block;
+            margin-right: 30px;
+            position: absolute;
+            right: 0;
+            bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box-wrapper">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box" style="width:600px"></div>
+            <div class="box"></div>
+        </div>
+        <div class="operator"></div>
+    </div>
+</body>
+</html>

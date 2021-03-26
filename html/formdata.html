@@ -1,0 +1,24 @@
+<script>
+    function createFormData(formData, key, data) {
+    if (data === Object(data) || Array.isArray(data)) {
+        for (var i in data) {
+            createFormData(formData, key + '[' + i + ']', data[i]);
+        }
+    } else {
+        formData.append(key, data);
+    }
+}
+var formData = new FormData();
+
+var data={
+    settings:[
+        {name:'xiaoming',age:11},
+        {name:'xiaowang',age:13}
+    ],
+    corpId:1,
+    userId:1
+}
+createFormData(formData,'data',data)
+
+for(let item of formData.entries()){console.log(item)}
+</script>

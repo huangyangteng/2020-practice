@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guide</title>
+    <style>
+        body,html{
+            margin:0;
+            padding:0;
+        }
+        .guide-page{
+            height: 100vh;
+            display: flex;
+        }
+        .guide-page>aside{
+            background-color: #131b3b;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 50px;
+        }
+        .guide-page>aside a{
+            color: #fff;
+            transition: 0.5s;
+        }
+        .guide-page>section{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 50px;
+        }
+        .guide-page>section a{
+            color: #131b3b;
+        }
+        a:hover{
+            opacity: 0.9;
+        }
+     
+    </style>
+</head>
+<body>
+    <div class="guide-page">
+        <aside>
+            <a href="dev"> 
+                <h1>开发版本（新功能）</h1>
+            </a>
+           
+        </aside>
+        <section>
+            <a href="prod">
+                <h1>生产版本（稳定版）</h1>
+            </a>
+            
+        </section>
+    </div>
+</body>
+</html>
