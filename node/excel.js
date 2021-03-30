@@ -28,13 +28,13 @@ const handleExcel= (list)=>{
       const tmp=workbook.addImage({base64:img,extension:'jpg'})
       worksheet.addImage(tmp, {
         tl: { col: 5+imgIndex*0.3, row: 1+index},
-        ext: { width: 30, height: 40 },
+        ext: { width: 100, height: 40 },
         editAs: 'undefined'
       });
     })
   })
  
-  workbook.xlsx.writeFile('hahaha.xlsx');
+  workbook.xlsx.writeFile('3.22-3.28.xlsx');
 }
 
 
