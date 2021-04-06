@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>canvas-practice</title>
+        <style>
+            #canvas {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="600"></canvas>
+        <video id="video" controls src="./media/a.mp4"></video>
+        <script>
+            //另一种方式：https://medium.com/yemeksepeti-teknoloji/using-html5-video-with-canvas-acb1ba8f6441
+            ;(() => { 
+                // const canvas = document.getElementById('canvas')
+                // const context = canvas.getContext('2d')
+                var canvas = document.getElementById('canvas')
+                var ctx = canvas.getContext('2d')
+                var video = document.getElementById('video')
+
+                video.addEventListener(
+                    'play',
+                    function () {
+                        var $this = this //cache
+                        ;(function loop() {
+                            console.log('play')
+                            if (!$this.paused && !$this.ended) {
+                                ctx.drawImage($this, 0, 0)
+                                setTimeout(loop, 1000 / 30) // drawing at 30fps
+                            }
+                        })()
+                    },
+                    0
+                )
+            })()
+        </script>
+    </body>
+</html>

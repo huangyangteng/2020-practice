@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>canvas-practice</title>
+        <style>
+            #canvas {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="600"></canvas>
+        <video id="vid" ></video>
+        <script>
+            // canvas 2个属性 3个方法
+            function canvasElementApi(canvas) {
+                console.log('canvasElementApi -> canvas.width', canvas.width)
+                console.log('canvasElementApi -> canvas.height', canvas.height)
+                console.log("canvasElementApi -> canvas.getContext('2d')", canvas.getContext('2d'))
+                document.getElementById('img').src = canvas.toDataURL('image/jpeg', 0.9)
+            }
+            // canvas context的属性和方法
+            function canvasContextApi(context) {
+                console.log('canvasContextApi -> context', context)
+            }
+          
+            ;(() => {
+                function fileDownload(url,video) {
+                var xhr = new XMLHttpRequest()
+                xhr.open('GET', url, true)
+                xhr.responseType = 'arraybuffer'
+                xhr.send()
+                xhr.onload = function (e) {
+                    if (xhr.status != 200) {
+                        onLoad()
+                        return
+                    }
+                    onLoad(xhr.response)
+                }
+                xhr.onerror = function (e) {
+                    video.src = null
+                }
+            }
+
+                var canvas = document.getElementById('canvas')
+                var ctx = canvas.getContext('2d')
+                var video = document.getElementById('vid')
+                let mediaSource = new MediaSource()
+                console.log("mediaSource", mediaSource)
+                video.src = window.URL.createObjectURL(mediaSource)
+
+                let sourceBuffer
+                mediaSource.addEventListener('sourceopen', function () {
+                    sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42c01e"')
+                    fileDownload('http://localhost:9999/files/videocodec_dashinit.mp4',video)
+                })
+
+                let allSegments
+                function onLoad(arrayBuffer) {
+                    if (!arrayBuffer) {
+                        video.src = null
+                        return
+                    }
+                    allSegments = new Uint8Array(arrayBuffer)
+                    sourceBuffer.appendBuffer(allSegments)
+                    processNextSegment()
+                }
+                function processNextSegment() {
+                    // Wait for the source buffer to be updated
+                    if (!sourceBuffer.updating && sourceBuffer.buffered.length > 0) {
+                        // Only push a new fragment if we are not updating and we have
+                        // less than 10 seconds in the pipeline
+                        if (
+                            sourceBuffer.buffered.end(sourceBuffer.buffered.length - 1) -
+                                video.currentTime <
+                            10
+                        ) {
+                            // Append the video segments and adjust the timestamp offset
+                            // forward
+                            sourceBuffer.timestampOffset = sourceBuffer.buffered.end(
+                                sourceBuffer.buffered.length - 1
+                            )
+                            sourceBuffer.appendBuffer(allSegments)
+                        }
+                        // Start playing the video
+                        if (video.paused) {
+                            video.play()
+                        }
+                    }
+                    setTimeout(processNextSegment, 1000)
+                }
+            })()
+        </script>
+    </body>
+</html>

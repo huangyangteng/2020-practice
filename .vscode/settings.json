@@ -1,4 +1,5 @@
 {
+    
     // 使能每一种语言默认格式化规则
     "[html]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
