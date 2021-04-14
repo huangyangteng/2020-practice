@@ -1,26 +1,30 @@
 <template>
-    <div id="app">
-        <Query @on-change="onQuery"></Query>
-        <ComponentExample></ComponentExample>
-    </div>
+  <div id="app">
+    
+  </div>
 </template>
+
 <script>
-import Query from './components/Query'
-import ComponentExample from './components/ComponentExample'
+
 export default {
-    components: { Query, ComponentExample },
-    methods: {
-        onQuery(value) {
-            console.log('onQuery -> value', value)
-        }
-    }
+  name: 'App',
+  components: {
+  }
 }
 </script>
-<style lang="less">
-body {
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding: 40px;
+
+<style>
+body,html{
+  margin: 0;
+  padding:0;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #fff;
+  background: #000;
+  height: 100vh;
 }
 </style>

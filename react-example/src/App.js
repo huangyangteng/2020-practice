@@ -4,6 +4,7 @@ import ClassComponent from './components/ClassComponent'
 import Query from './components/Query'
 import LifeCycle from './components/LifeCycle';
 import ConditionRender from './components/ConditionRender'
+import List from './components/List'
 function callback(){
   alert('callback')
 }
@@ -12,16 +13,8 @@ function queryData(e){
 
 }
 
-function show(flag){
-  if(flag){
-    return {display:'block'}
-  }else{
-    return {display:'none'}
-  }
 
-}
 function App() {
-  const show=false
   return (
     <div className="App">
         <FunctionalComponent  name="hello" propA="propA" propB={callback}></FunctionalComponent>
@@ -29,6 +22,7 @@ function App() {
         <ClassComponent  name="hello" ></ClassComponent>
         <LifeCycle ></LifeCycle>
         <ConditionRender></ConditionRender>
+        <List list={[{name:'xiaoming',age:11},{name:'xiaohong',age:12}]}></List>
     </div>
   );
 }

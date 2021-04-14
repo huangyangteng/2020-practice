@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>blob</title>
+    </head>
+    <body>
+        <input type="file" id="f" />
+        <video id="video" controls style="width: 400px; height: 200px;"></video>
+        <div></div>
+        <script>
+           
+         
+            function sleep(ms) {
+                return new Promise((resolve) => setTimeout(resolve, ms))
+            }
+            function getImage(context, video) {
+                context.drawImage(video, 0, 0, 400, 200)
+                return new Promise((resolve) => {
+                    context.canvas.toBlob(
+                        (blob) => {
+                            const url = URL.createObjectURL(blob)
+                            resolve(url)
+                        },
+                        'image/jpeg',
+                        1.0
+                    )
+                })
+            }
+        
+            const getList = async (video,frameNum=30) => {
+                const canvas = document.createElement('canvas')
+                const context = canvas.getContext('2d')
+                const list = []
+                const duration=video.duration
+                const step=duration/frameNum
+                for (let i = 0; i < duration; i+=step) {
+                    video.currentTime = i
+                    await sleep(200)
+                    let tmp = await getImage(context, video)
+                    list.push(tmp)
+                }
+                return new Promise((resolve) => {
+                    resolve(list)
+                })
+            }
+            
+
+            ;(function(){
+                const video = document.getElementById('video')
+                document.getElementById('f').addEventListener(
+                    'change',
+                    async (e) => {
+                        var file = e.target.files[0]
+                        const url = URL.createObjectURL(file)
+                        video.src = url
+                        // 获取视频中的帧列表
+                        video.onloadedmetadata=async ()=>{
+                            console.log('on load')
+                            const list = await getList(video)
+                            console.log("list", list)
+
+                            // 将帧列表渲染到页面上
+                            list.forEach((item) => {
+                                var img = document.createElement('img')
+                                img.src = item
+                                document.body.appendChild(img)
+                            })    
+                        }
+                        
+                    },
+                    false
+                )
+                }())
+          
+        </script>
+    </body>
+</html>
