@@ -16,8 +16,13 @@
         <script>
             //另一种方式：https://medium.com/yemeksepeti-teknoloji/using-html5-video-with-canvas-acb1ba8f6441
             ;(() => { 
-                // const canvas = document.getElementById('canvas')
-                // const context = canvas.getContext('2d')
+                const rule=[
+                    {start:0,end:3,src:'./media/a.mp4'},
+                    {start:5,end:8,src:'./media/a.mp4'},
+                    {start:0,end:3,star:'./media/b.mp4'}
+                ]
+                // 根据rule规则渲染到画布上
+
                 var canvas = document.getElementById('canvas')
                 var ctx = canvas.getContext('2d')
                 var video = document.getElementById('video')
