@@ -7,6 +7,7 @@
         <section class="video-track-wrapper">
             <vdr
                 :style="{ background: item.color }"
+                :active="item.id==activeId"
                 @activated="tapSegment(item)"
                 v-for="item in list"
                 :key="item.id"
@@ -17,12 +18,19 @@
                 @dragstop="dragstop"
                 :onResize="onResizing"
                 @resizestop="resizestop"
+                :grid="getGrid()"
             >
                 <h3>Hello World!</h3>
             </vdr>
         </section>
+        <section v-if="false">
+            <div>左边 向左拖：{{this.leftToLeft}}</div>
+            <div>左边 向右拖：{{this.leftToRight}}</div>
+            <div>右边 向右拖：{{this.rightToRight}}</div>
+            <div>右边 向左拖：{{this.rightToLeft}}</div>
+        </section>
         <section>
-            <div class="debug-wrapper" v-for="item in degbugList" :key="item.key">
+            <div class="debug-wrapper" :class="{active:item.id==activeId}" v-for="item in degbugList" :key="item.key">
                 <span>id：{{ item.id }}</span>
                 <span>start：{{ item.start }}</span>
                 <span>end：{{ item.end }}</span>
@@ -34,14 +42,18 @@
 </template>
 
 <script>
+function _formatNum(num){
+    return Number(num.toFixed(3))
+
+}
 export default {
     name: 'Track',
     data() {
         return {
+            tmp:'',
             config: {
                 parent: true,
                 h: 64,
-                parentLimitation: true,
                 handles: ['ml', 'mr']
             },
             list: [
@@ -61,7 +73,11 @@ export default {
             duration: 30,
             wrapperWidth: 1200,
             curTime: 10,
-            toTheLeft:false
+            toTheLeft:false,
+            leftToLeft:false,
+            leftToRight:false,
+            rightToRight:false,
+            rightToLeft:false
         }
     },
     computed: {
@@ -89,6 +105,11 @@ export default {
         }
     },
     methods: {
+        getGrid(){
+            let dis=this._percentDistance(0.01)
+            console.log(dis)
+            return [dis,1]
+        },
         tapSegment(segment) {
             this.activeId = segment.id
             this.updatectiveSegemnt({
@@ -111,7 +132,7 @@ export default {
 
             const { start, end, left, width, cutEnd } = this.cutElement
 
-            const newWidth = this.percentDistance(this.curTime - start)
+            const newWidth = this._percentDistance(this.curTime - start)
             const newCutEnd = this.curTime - start
 
             let newSeg = {
@@ -125,19 +146,22 @@ export default {
             }
             this.addSeg(newSeg)
 
-            this.updateSegment(this.cutElement.id,{
+            this._updateSegment(this.cutElement.id,{
                 width: newWidth,
-                cutEnd: this.curTime - start,
+                cutEnd: _formatNum(this.curTime - start),
                 end: this.curTime
             })
         },
-        percentDuration(x) {
-            return (this.duration / this.wrapperWidth) * x
+        _percentDuration(x) {
+            let result= (this.duration / this.wrapperWidth) * x
+            return _formatNum(result)
         },
-        percentDistance(time) {
-            return (1200 / 32) * time
+        _percentDistance(time) {
+            let result= (this.wrapperWidth / this.duration) * time
+            return _formatNum(result)
+
         },
-        updateSegment(id, props) {
+        _updateSegment(id, props) {
             let index = this.list.findIndex((item) => item.id == id)
             if (index == -1) return
             let item = this.list[index]
@@ -145,21 +169,48 @@ export default {
             this.list.splice(index, 1, item)
         },
         updatectiveSegemnt(props) {
-            this.updateSegment(this.activeId, props)
+            this._updateSegment(this.activeId, props)
         },
         handleChange({ left, width }) {
             if (!width) {
                 width = this.activeSegment.width
             }
-            let start = this.percentDuration(left)
-            let end = this.percentDuration(left + width)
-            // 宽度改变也会影响cutStart,cutEnd
 
+            let start = this._percentDuration(left)
+            let end = this._percentDuration(left + width)
+
+            let oldWidth=this.activeSegment.width
+            let distance= this._percentDuration(Math.abs(width-oldWidth))
+            // 宽度改变也会影响cutStart,cutEnd
+            let {cutStart,cutEnd}=this.activeSegment
+
+            if(this.leftToLeft){//width增大，cutStart减少
+                cutStart=cutStart-distance
+            }
+            if(this.leftToRight){
+                cutStart=cutStart+distance
+            }
+            if(this.rightToRight){
+                cutEnd=cutEnd+distance
+            }
+            if(this.rightToLeft){
+                cutEnd=cutEnd-distance
+            }
+            if(cutStart<0){
+                cutStart=0
+            }
+            if(cutEnd>this.duration){
+               cutEnd=this.duration
+            }
+            
+           
             this.updatectiveSegemnt({
                 left,
                 width,
-                start,
-                end
+                start:_formatNum(start),
+                end:_formatNum(end),
+                cutStart:_formatNum(cutStart),
+                cutEnd:_formatNum(cutEnd)
             })
             // start通过left计算 end通过left+width计算
             //cutStart
@@ -170,37 +221,65 @@ export default {
         resizestop(left, top, width) {
             this.handleChange({ left, width })
         },
-        onResizing(handle,x) {
-            this.toTheLeft=x<this.activeSegment.left
-            let direaction=this.toTheLeft?'向左':'向右'
-            console.log(x,this.activeSegment.left,direaction)
-
-
-            const { cutStart, cutEnd } = this.activeSegment
-            if(cutStart==0 && cutEnd==this.duration){
-                return true
-            }
-            // 向右拖
-            // 向左拖
+        resetDirection(){
+            this.leftToLeft=false
+            this.leftToRight=false
+            this.rightToRight=false
+            this.rightToLeft=false
+        },
+        onResizing(handle,x,y,width) {
+            this.tmp=y
             
+
             // 拖左边的
             let dragLeft = handle == 'ml'
             // 拖右边的
             let dragRight = handle == 'mr'
-            
-            // 向左拖，且cutStart为0
-            if (dragLeft && cutStart == 0) {
+            this.resetDirection()
+            if(dragLeft){
+                if(x<this.activeSegment.left){
+                    this.leftToLeft=true
+                }else{
+                    this.leftToRight=true
+                }
+            }
+            if(dragRight){
+                if(width>this.activeSegment.width){
+                    this.rightToRight=true
+                }else{
+                    this.rightToLeft=true
+                }
+            }
+
+
+            const { cutStart, cutEnd,width:oldWidth } = this.activeSegment
+            // cutStart为0，不能再向左拖
+            if(cutStart<=0 && this.leftToLeft){
                 return false
             }
-            //向右拖，且cutEnd=duration
-            if (dragRight && cutEnd == this.duration) {
+            // cutEnd>=duration，不能在向右拖
+            if(cutEnd>=this.duration && this.rightToRight){
+                return false
+            }   
+
+
+            let distance= this._percentDuration(Math.abs(width-oldWidth))            
+            if(this.leftToLeft && cutStart-distance<=0 ){
                 return false
             }
+            if(this.rightToRight &&  cutEnd+distance>=this.duration){
+                return false
+            }
+
+            // 判断一次最少拖动0.1
+
+            return true
+          
             
         }
     },
     created() {
-        console.log(this.percentDuration(1200))
+        
     }
 }
 </script>
@@ -224,6 +303,9 @@ export default {
 }
 .debug-wrapper {
     margin-top: 30px;
+}
+.debug-wrapper.active{
+    font-weight: 800;
 }
 .debug-wrapper > span {
     margin-left: 10px;
