@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <video-cut-page v-if="false"></video-cut-page>
     <CanvasVideo v-if="false"></CanvasVideo>
-    <Track></Track>
-   
+    <Track  v-if="false"></Track>
+    <play-video-segment></play-video-segment>
+    <test-player></test-player>
   </div>
 </template>
 

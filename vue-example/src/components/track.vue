@@ -4,6 +4,7 @@
         
         <input style="padding:10px" v-model="curTime" type="number" />
          <button v-if="canCut" style="margin-left:10px;margin-bottom:10px" @click="cutVideo">裁剪</button>
+            <vdr v-bind="marker"></vdr>
         <section class="video-track-wrapper">
             <vdr
                 :style="{ background: item.color }"
@@ -18,9 +19,9 @@
                 @dragstop="dragstop"
                 :onResize="onResizing"
                 @resizestop="resizestop"
-                :grid="getGrid()"
+                :grid="grid"
             >
-                <h3>Hello World!</h3>
+                   
             </vdr>
         </section>
         <section v-if="false">
@@ -48,13 +49,38 @@ function _formatNum(num){
 }
 export default {
     name: 'Track',
+    props:{
+        frames:{
+            type:Array,
+            required:false
+        }
+    },
     data() {
         return {
+            marker:{
+                x:0,
+                w:10,
+                h:150,
+                z:100,
+                y:0,
+                  handles: [],
+                // 'class-name':'track-marker',
+                resizable:false,
+                parent:true,
+                axis:'x'
+
+                  
+            },
+            markerConfig:{
+              
+
+            },
             tmp:'',
             config: {
                 parent: true,
                 h: 64,
-                handles: ['ml', 'mr']
+                handles: ['ml', 'mr'],
+                'prevent-deactivation':true
             },
             list: [
                 {
@@ -81,6 +107,10 @@ export default {
         }
     },
     computed: {
+        grid(){
+             let dis=this._percentDistance(0.01)
+            return [dis,1]
+        },
         activeSegment() {
             return this.list.find((item) => item.id == this.activeId)
         },
@@ -105,11 +135,10 @@ export default {
         }
     },
     methods: {
-        getGrid(){
-            let dis=this._percentDistance(0.01)
-            console.log(dis)
-            return [dis,1]
-        },
+        // getGrid(){
+        //     let dis=this._percentDistance(0.01)
+        //     return [dis,1]
+        // },
         tapSegment(segment) {
             this.activeId = segment.id
             this.updatectiveSegemnt({
