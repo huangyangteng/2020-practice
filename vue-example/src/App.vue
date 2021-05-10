@@ -3,8 +3,11 @@
     <video-cut-page v-if="false"></video-cut-page>
     <CanvasVideo v-if="false"></CanvasVideo>
     <Track  v-if="false"></Track>
-    <play-video-segment></play-video-segment>
-    <test-player></test-player>
+    <play-video-segment v-if="false"></play-video-segment>
+    <test-player v-if="false"></test-player>
+    <audio-wave v-if="false"></audio-wave>
+    <anime v-if="false"></anime>
+    <anime-bounceInup ></anime-bounceInup>
   </div>
 </template>
 

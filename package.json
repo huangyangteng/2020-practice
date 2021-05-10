@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^0.21.1",
-    "dayjs": "^1.10.4"
+    "dayjs": "^1.10.4",
+    "wavesurfer.js": "^4.6.0"
   }
 }
