@@ -69,7 +69,7 @@ export default {
              let dis=this.curTime-item.start
              return item.cutStart+dis
         },
-        videoPlay(){//只能从头开始播放?
+        videoPlay(){
             if(this.counter>=this.videoSegments.length){
                 this.videoPause()
                 return 
@@ -89,31 +89,11 @@ export default {
             console.log("onTimeUpdateNew -> currentTime", currentTime)
 
             if(currentTime>=this.curSegment.cutEnd){
+                this.curTime=this.curSegment.end
                 this.counter+=1
                 this.videoPlay()
             }
         },
-        onTimeUpdate(){
-            const curTime=this.$refs.v.currentTime
-            console.log("onTimeUpdate -> curTime", curTime)
-            const endTime=Math.max(...this.videoSegments.map(item=>item.end))
-            if(curTime>=endTime){
-                this.videoPause()
-                return 
-            }
-            const segment=this.videoSegments.find(item=>curTime>=item.start && curTime<=item.end)
-            if(segment){
-                const {cutStart,cutEnd}=segment
-                if(curTime<cutStart){
-                    this.$refs.v.currentTime=cutStart
-                }
-                if(curTime>cutEnd){
-                    this.$refs.v.currentTime=cutStart
-                }
-
-            }
-          
-        }
     },
     created() {}
 }

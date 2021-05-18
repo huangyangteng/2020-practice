@@ -1,11 +1,13 @@
 import './App.css';
+import BasicRouter from './page/router-demo/basic-router';
 // import FunctionalComponent from './components/FunctionalComponent'
 // import ClassComponent from './components/ClassComponent'
 // import Query from './components/Query'
 // import LifeCycle from './components/LifeCycle';
 // import ConditionRender from './components/ConditionRender'
 // import List from './components/List'
-import User from './page/user/user';
+// import User from './page/user/user';
+
 
 
 function App() {
@@ -17,7 +19,8 @@ function App() {
         <LifeCycle ></LifeCycle>
         <ConditionRender></ConditionRender>
         <List list={[{name:'xiaoming',age:11},{name:'xiaohong',age:12}]}></List> */}
-        <User></User>
+        {/* <User></User> */}
+        <BasicRouter></BasicRouter>
     </div>
   );
 }
