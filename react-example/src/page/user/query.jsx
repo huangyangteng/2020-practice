@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React, { useImperativeHandle, useState,forwardRef } from 'react'
 import { Input,Button } from 'antd';
-function Query({onQuery}){
+
+
+function Query({onQuery},ref){
+    console.log(arguments)
+    // 子组件使用useImperativeHandle暴露ref自动已的实例值
+    useImperativeHandle(ref, () => ({
+        hello: () => console.log('hello world!')
+    }))
     const [params,setParams]=useState({
         name:'',
         phone:'',
@@ -23,4 +30,4 @@ function Query({onQuery}){
         {JSON.stringify(params)}
     </section>
 }
-export default Query
+export default forwardRef(Query)

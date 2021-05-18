@@ -1,9 +1,12 @@
 <template>
     <section>
-        <button @click="play">play</button>
-        <button @click="pause">pause</button>
+        <span>当前时间{{curTime}}</span>
+        <br>
+        <button @click="handlePlay">play</button>
+        <button @click="handlePause">pause</button>
         <button @click="reset">reset</button>
         <video  @timeupdate="onTimeUpdateNew"  ref="v" style="height:400px" src="http://10.1.69.42:12300/diyvrbt/video/2021-04-16/202104_1056_18592_3BDuB4USv5yWqxQzkTYi.mp4"></video>
+
     </section>
 </template>
 
@@ -20,6 +23,8 @@ export default {
                 ],
             timer:0,
             playTime:0,
+            curTime:0,
+            duration:9
            
         }
     },
@@ -32,36 +37,60 @@ export default {
         reset(){
             this.$refs.v.currentTime=0
             this.counter=0
+            this.curTime=0
         },
-        play(){//只能从头开始播放?
+        handlePlay(){
+            this.timerPlay()
+            this.videoPlay()
+        },
+        handlePause(){
+            this.timerPause()
+            this.videoPause()
+        },
+
+
+        timerPlay(){
+            this.timer=setInterval(()=>{
+                this.curTime=this.curTime+0.01
+                if(this.curTime+0.01>=this.duration){
+                    this.curTime=this.duration
+                    this.timerPause()
+                }
+            },10)
+        },
+        timerPause(){
+            clearInterval(this.timer)
+        },
+        getCutTime(){
+            let item=this.videoSegments.find(item=>{
+                const {start,end}=item
+                return start<=this.curTime && this.curTime<=end
+            })
+             let dis=this.curTime-item.start
+             return item.cutStart+dis
+        },
+        videoPlay(){//只能从头开始播放?
             if(this.counter>=this.videoSegments.length){
-                this.pause()
+                this.videoPause()
                 return 
             }
-            this.$refs.v.currentTime=this.curSegment.cutStart
+            this.$refs.v.currentTime=this.getCutTime()
             this.$refs.v.play()
         },
-        pause(){
+        videoPause(){
             this.$refs.v.pause()
-        },
-        playVideo(){
-            //播放第一段
-            //播放第二段
-            //播放第三段
-
         },
         onTimeUpdateNew(){
              if(this.counter>=this.videoSegments.length){
-                this.pause()
+                this.videoPause()
                 return 
             }
             const currentTime=this.$refs.v.currentTime
             console.log("onTimeUpdateNew -> currentTime", currentTime)
 
             if(currentTime>=this.curSegment.cutEnd){
-            //    this.$refs.v.pause()
                 this.counter+=1
-                this.play()
+                this.videoPlay()
             }
         },
         onTimeUpdate(){
@@ -69,7 +98,7 @@ export default {
             console.log("onTimeUpdate -> curTime", curTime)
             const endTime=Math.max(...this.videoSegments.map(item=>item.end))
             if(curTime>=endTime){
-                this.pause()
+                this.videoPause()
                 return 
             }
             const segment=this.videoSegments.find(item=>curTime>=item.start && curTime<=item.end)
