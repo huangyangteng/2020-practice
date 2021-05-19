@@ -1,5 +1,7 @@
 import './App.css';
 import BasicRouter from './page/router-demo/basic-router';
+import NestedRouter from './page/router-demo/nested-router.jsx';
+import ParamsRouter from './page/router-demo/params-router';
 // import FunctionalComponent from './components/FunctionalComponent'
 // import ClassComponent from './components/ClassComponent'
 // import Query from './components/Query'
@@ -21,6 +23,9 @@ function App() {
         <List list={[{name:'xiaoming',age:11},{name:'xiaohong',age:12}]}></List> */}
         {/* <User></User> */}
         <BasicRouter></BasicRouter>
+        <hr></hr>
+        {/* <NestedRouter></NestedRouter> */}
+        <ParamsRouter></ParamsRouter>
     </div>
   );
 }
