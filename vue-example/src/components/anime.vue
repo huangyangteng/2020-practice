@@ -43,9 +43,9 @@ export default {
                 // 第二种情况 1-4,添加出入场动画
                 {id:'1',x:100,y:100,w:100,h:100,startTime:1,endTime:4,inTime:1,outTime:1,retentionTime:1,motionInClass:'bounceInUp',motionOutClass:'fadeOutRight',retentionClass:''},
 
-                // {id:'2',x:200,y:200,w:100,h:100,startTime:1,endTime:6,inTime:1,outTime:1,retentionTime:1,motionInClass:'fadeInLeft',motionOutClass:'fadeOutRight',retentionClass:''},
-                // {id:'3',x:300,y:300,w:100,h:100,startTime:8,endTime:12,inTime:1,outTime:1,retentionTime:1,motionInClass:'fadeInLeft',motionOutClass:'fadeOutRight',retentionClass:''},
-                // {id:'4',x:400,y:400,w:100,h:100,startTime:0,endTime:3,inTime:1,outTime:1,retentionTime:1,motionInClass:'',motionOutClass:'',retentionClass:''},
+                {id:'2',x:200,y:200,w:100,h:100,startTime:1,endTime:6,inTime:1,outTime:1,retentionTime:1,motionInClass:'fadeInLeft',motionOutClass:'fadeOutRight',retentionClass:''},
+                {id:'3',x:300,y:300,w:100,h:100,startTime:8,endTime:12,inTime:1,outTime:1,retentionTime:1,motionInClass:'fadeInLeft',motionOutClass:'fadeOutRight',retentionClass:''},
+                {id:'4',x:400,y:400,w:100,h:100,startTime:0,endTime:3,inTime:1,outTime:1,retentionTime:1,motionInClass:'',motionOutClass:'',retentionClass:''},
             ]
         }
     },
@@ -96,15 +96,17 @@ export default {
                 duration: 1000,
                 easing: 'easeInOutSine',
             })
-            this.rule.forEach((item,index) => {
-                if(index==1){
-                    console.log("generateAnimRule -> getAnim(item)", getAnim(item))
-                    this.anime.add(getAnim(item),10)
-                }else if(index==2){
-                    //  this.anime.add({"targets":".attach_3","keyframes":[{"delay":8000},{"translateX":["-100%",0],"opacity":[0,1],"duration":1000,},{"delay":3000},{"opacity":[1,0],"translateX":"100%","duration":1000}]},10)
-                }else{
-                    this.anime.add(getAnim(item),10)
-                }
+            this.rule.forEach((item) => {
+                console.log("generateAnimRule -> getAnim(item)", getAnim(item))
+                 this.anime.add(getAnim(item),10)
+                // if(index==1){
+                //     console.log("generateAnimRule -> getAnim(item)", getAnim(item))
+                //     this.anime.add(getAnim(item),10)
+                // }else if(index==2){
+                //     //  this.anime.add({"targets":".attach_3","keyframes":[{"delay":8000},{"translateX":["-100%",0],"opacity":[0,1],"duration":1000,},{"delay":3000},{"opacity":[1,0],"translateX":"100%","duration":1000}]},10)
+                // }else{
+                //     this.anime.add(getAnim(item),10)
+                // }
             });
             
         }

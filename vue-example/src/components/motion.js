@@ -1,3 +1,28 @@
+export function getAnim(item){
+    let {id,startTime,endTime,inTime,outTime,motionInClass,motionOutClass}=item
+    //motionIn
+    //retention
+    //motionOut
+    if(!motionInClass){
+        motionInClass='fadeIn'
+        inTime=0
+    }
+    if(!motionOutClass){
+        motionOutClass='fadeOut'
+        outTime=0
+    }
+    let duration=endTime-startTime-inTime-outTime
+
+    return {
+        targets: '.attach_'+id,
+        keyframes: [
+               ...getMotionIn({inTime,startTime,motionInClass}),
+                {delay:duration*1000},
+               ...getMotionOut({outTime,motionOutClass})
+        ]
+    }
+
+}
 export const ANIM_MAP={
     fadeIn(duration){
         return {
@@ -203,31 +228,7 @@ function getMotionOut({outTime,motionOutClass}){
         ...format(ANIM_MAP[motionOutClass](outTime*1000))
     ]
 }
-export function getAnim(item){
-    let {id,startTime,endTime,inTime,outTime,motionInClass,motionOutClass}=item
-    //motionIn
-    //retention
-    //motionOut
-    if(!motionInClass){
-        motionInClass='fadeIn'
-        inTime=0
-    }
-    if(!motionOutClass){
-        motionOutClass='fadeOut'
-        outTime=0
-    }
-    let duration=endTime-startTime-inTime-outTime
 
-    return {
-        targets: '.attach_'+id,
-        keyframes: [
-               ...getMotionIn({inTime,startTime,motionInClass}),
-                {delay:duration*1000},
-               ...getMotionOut({outTime,motionOutClass})
-        ]
-    }
-
-}
 
 
 function format(obj){

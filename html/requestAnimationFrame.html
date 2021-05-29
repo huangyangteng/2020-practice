@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .box {
+                width: 200px;
+                height: 200px;
+                border-radius: 10px;
+                background: rebeccapurple;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box" class="box"></div>
+        <script>
+            const element = document.getElementById('box')
+            let start=null
+            function animation(timestamp) {
+                console.log("animation -> timestamp", timestamp)
+                if(!start){//赋初始值
+                    start=timestamp
+                    console.log("animation -> start", start)
+                }
+                const duration=timestamp-start
+                if(duration<5000){
+                    window.requestAnimationFrame(animation)
+                }
+            }
+            //浏览器告诉你什么时候执行动画
+            window.requestAnimationFrame(animation)
+        </script>
+    </body>
+</html>
