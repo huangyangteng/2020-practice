@@ -5,6 +5,9 @@ html,body{
   margin:0;
   color:#fff!important;
 }
+input,button{
+  background-color: #282c34!important;
+}
 h1,h2,h3{
   color: #fff!important;
 }
