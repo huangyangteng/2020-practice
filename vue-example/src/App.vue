@@ -6,11 +6,12 @@
     <play-video-segment v-if="false"></play-video-segment>
     <test-player v-if="false"></test-player>
     <audio-wave v-if="false"></audio-wave>
-    <anime  v-if="false"></anime>
+    <anime-demo  v-if="true"></anime-demo>
+    <anime  v-if="true"></anime>
     <anime-bounceInup v-if="false"></anime-bounceInup>
     <my-video v-if="false"></my-video>
     <layout v-if="false"></layout>
-    <request-animation></request-animation>
+    <request-animation v-if="false"></request-animation>
   </div>
 </template>
 
