@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas-practice</title>
+    <style>
+        .wrapper{
+            margin:40px auto;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #canvas{
+            background-color: #eee;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <section class="wrapper">
+        <canvas id="canvas" width="600" height="600">
+        </canvas>
+        <img class="hide"  id="head" src="./media/头像1.jpg" alt="" id="img">
+        <img class="hide"  id="cover" src="./media/cover.jpeg" alt="" id="img">
+    </section>
+    <script>
+       
+
+
+        ;(()=>{
+            const canvas=document.getElementById('canvas')
+            const context=canvas.getContext('2d')
+            const head=document.getElementById('img')
+            const cover=document.getElementById('cover')
+            // const sx, sy, sWidth, sHeight,
+            cover.onload=function(){
+                //void ctx.drawImage(image, dx, dy);
+                // context.drawImage(img,0,0)
+                  context.drawImage(cover,0,0,600,600)
+                //   context.drawImage(cover,0,0,600,600,0,0,600,600)
+                
+            }
+        })()
+    </script>
+</body>
+</html>

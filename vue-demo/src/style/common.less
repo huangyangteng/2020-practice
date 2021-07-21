@@ -1,0 +1,49 @@
+@primary-color: rgba(77, 77, 255, 1);
+
+.box{
+    width:100px;
+    height: 100px;
+    background-color:rgba(77, 77, 255, 1);
+    position: absolute;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.primary{
+    background-color:rgba(77, 77, 255, 1);
+}
+.error{
+    background-color:#f5222d;
+}
+.warn{
+    background-color:#eb9130;
+}
+.green{
+    background-color: greenyellow;
+}
+
+.canvas{
+    width:800px;
+    height: 400px;
+    border-radius: 10px;
+    background-color: fade(@primary-color,10);
+    display:flex;
+    flex-wrap: wrap;
+    .box{
+        position: relative;
+    }
+   
+    
+}
+
+// -----reset markdown editor
+
+.v-note-wrapper{
+    min-height: 0!important;
+    margin-bottom: 20px;
+    .v-note-op{
+        display: none!important;
+    }
+}
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content, .v-note-wrapper .v-note-panel .v-note-show .v-show-content-html{
+    padding:10px!important;
+}

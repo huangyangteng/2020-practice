@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    body {background:black; text-align: center;}
+    #c1 {background:url(img/game_bg_2_hd.jpg) no-repeat;}
+    </style>
+    <script src="js/common.js" charset="utf-8"></script>
+    <script src="js/drawRect.js" charset="utf-8"></script>
+    <script src="js/sprite.js" charset="utf-8"></script>
+    <script src="js/fish.js" charset="utf-8"></script>
+    <script src="js/cannon.js" charset="utf-8"></script>
+    <script src="js/button.js" charset="utf-8"></script>
+    <script>
+    window.onload=function (){
+      let oC=document.getElementById('c1');
+      let gd=oC.getContext('2d');
+
+      const W=oC.width,H=oC.height;
+
+      loadImgs(_resources, function (imgs){
+        //炮台
+        let tower=new Sprite(new DrawRect(_imgs.bottom, 0, 0, 756, 71));
+        tower.x=400;
+        tower.y=H-71/2+1;
+
+        //炮
+        let cannon=new Cannon(1);
+
+        cannon.x=443;
+        cannon.y=574;
+
+        //炮跟着鼠标转
+        oC.onmousemove=function (ev){
+          let a=ev.offsetX-cannon.x;
+          let b=ev.offsetY-cannon.y;
+
+          let ang=a2d(Math.atan2(b, a))+90;
+
+          cannon.rotation=ang;
+        };
+
+        //加号、减号
+        let btnMinus=new Button(
+          new DrawRect(_imgs.bottom, 135, 75, 36, 28),
+          new DrawRect(_imgs.bottom, 91, 75, 36, 28)
+        );
+        btnMinus.x=371;
+        btnMinus.y=566;
+
+        let btnPlus=new Button(
+          new DrawRect(_imgs.bottom, 47, 75, 36, 28),
+          new DrawRect(_imgs.bottom, 3, 75, 36, 28)
+        );
+        btnPlus.x=516;
+        btnPlus.y=566;
+
+        btnMinus.onclick=function (){
+          if(cannon.type>1){
+            cannon.setType(cannon.type-1);
+          }else{
+            cannon.setType(1);
+          }
+        };
+        btnPlus.onclick=function (){
+          if(cannon.type<7){
+            cannon.setType(cannon.type+1);
+          }else{
+            cannon.setType(7);
+          }
+        };
+
+        let aBtn=[btnMinus, btnPlus];
+
+        oC.onmousedown=function (ev){
+          aBtn.forEach(btn=>{
+            btn.down(ev.offsetX, ev.offsetY);
+          });
+        };
+        oC.onmouseup=function (ev){
+          aBtn.forEach(btn=>{
+            btn.up(ev.offsetX, ev.offsetY);
+          });
+        };
+
+        function animate(){
+          requestAnimationFrame(animate);
+          gd.clearRect(0, 0, oC.width, oC.height);
+
+          tower.draw(gd);
+          cannon.draw(gd);
+
+          btnMinus.draw(gd);
+          btnPlus.draw(gd);
+        }
+        requestAnimationFrame(animate);
+      });
+    };
+    </script>
+  </head>
+  <body>
+    <canvas id="c1" width="800" height="600"></canvas>
+  </body>
+</html>

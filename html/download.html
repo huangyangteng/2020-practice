@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+         function download(link, name) {
+            if (!name) {
+                name = getFileName(link)
+            }
+            let eleLink = document.createElement('a')
+            eleLink.download = name
+            eleLink.style.display = 'none'
+            eleLink.href = link
+            document.body.appendChild(eleLink)
+            eleLink.click()
+            document.body.removeChild(eleLink)
+        }
+        download('http://10.1.69.42:8888/static/media/muban.00f47ba0.svg','a.svg')
+    </script>
+</body>
+</html>

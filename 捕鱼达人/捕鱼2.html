@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    body {background:black; text-align: center;}
+    #c1 {background:url(img/game_bg_2_hd.jpg) no-repeat;}
+    </style>
+    <script src="js/common.js" charset="utf-8"></script>
+    <script>
+    class Sprite{
+      //w,h,x,y,rotate
+      //draw(),碰撞检测()
+
+      constructor(img, width, height, x=0, y=0, rotation=0){
+        this.img=img;
+        this.width=width;
+        this.height=height;
+        this.sx=0;
+        this.sy=0;
+        this.x=x;
+        this.y=y;
+        this.rotation=rotation;
+      }
+
+      draw(gd){
+        gd.save();
+
+        gd.translate(this.x, this.y);
+        gd.rotate(d2a(this.rotation));
+
+        gd.drawImage(
+          this.img,
+          this.sx, this.sy, this.width, this.height,
+          -this.width/2, -this.height/2, this.width, this.height
+        );
+
+        gd.restore();
+      }
+    }
+
+    class Fish extends Sprite{
+      constructor(type, x=0, y=0, rotation=0){
+        const SIZE=[
+          null,
+          {w: 55, h: 37},
+          {w: 78, h: 64},
+          {w: 72, h: 56},
+          {w: 77, h: 59},
+          {w: 107, h: 122}
+        ];
+
+        //父类
+        super(_imgs[`fish${type}`], SIZE[type].w, SIZE[type].h, x, y, rotation);
+
+        //子类
+        this.type=type;
+
+        this.curFrame=0;
+        this.MAX_FRAME=4;
+      }
+
+      nextFrame(){
+        this.curFrame++;
+        if(this.curFrame>=this.MAX_FRAME){
+          this.curFrame=0;
+        }
+
+        this.sy=this.height*this.curFrame;
+      }
+    }
+
+    window.onload=function (){
+      let oC=document.getElementById('c1');
+      let gd=oC.getContext('2d');
+
+      loadImgs({
+        fish1: 'img/fish1.png',
+        coin1: 'img/coinAni1.png',
+        cannon1: 'img/cannon1.png'
+      }, function (imgs){
+        let fish1=new Fish(1);
+
+        fish1.x=200;
+        fish1.y=150;
+
+        let tick=0;
+
+        setInterval(function (){
+          gd.clearRect(0, 0, oC.width, oC.height);
+
+          fish1.x++;
+
+          fish1.draw(gd);
+
+          tick++;
+          if(tick==10){
+            tick=0;
+
+            fish1.nextFrame();
+          }
+        }, 16);
+
+        /*let fish1=new Sprite(imgs.fish1, 55, 37);
+
+        fish1.x=200;
+        fish1.y=150;
+
+        let tick=0;
+        let i=0;
+
+        setInterval(function (){
+          gd.clearRect(0, 0, oC.width, oC.height);
+
+          //fish1.rotation++;
+          fish1.sy=fish1.height*i;
+          fish1.x++;
+
+          fish1.draw(gd);
+
+          //摆尾巴
+          tick++;
+          if(tick==10){
+            tick=0;
+
+            i++;
+            if(i>=4){
+              i=0;
+            }
+          }
+        }, 16);*/
+      });
+    };
+    </script>
+  </head>
+  <body>
+    <canvas id="c1" width="800" height="600"></canvas>
+  </body>
+</html>

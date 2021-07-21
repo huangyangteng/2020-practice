@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="d3.js" charset="utf-8"></script>
+    <script>
+    //nodes/links
+    window.onload=function (){
+      let oC=document.getElementById('c1');
+      let gd=oC.getContext('2d');
+
+      //数据
+      const datas=[
+        {name: '湖南省', child: ['长沙', '湘潭', '株洲', '津市', '桃园']},
+        {name: '广东省', child: ['广州', 'a', 'b', 'c']},
+        {name: '山东省', child: ['济南', '巨野', '德州', '泰安', '临沂']}
+      ];
+
+      //节点、连接
+      let nodes=[];
+      let links=[];
+
+      nodes.push({name: '中国'})
+
+      datas.forEach(data=>{
+        nodes.push({name: data.name});
+        links.push({source: '中国', target: data.name, value: 150});
+
+        data.child.forEach(cityName=>{
+          nodes.push({name: cityName});
+          links.push({source: data.name, target: cityName, value: 20});
+        });
+      });
+
+      let sim=d3.forceSimulation()
+        .nodes(nodes)
+        .force('link', d3.forceLink(links).id(item=>item.name).distance(item=>item.value))
+        .force('charge', d3.forceManyBody())
+        .force('center', d3.forceCenter(oC.width/2, oC.height/2));
+
+      sim.on('tick', ()=>{
+        gd.clearRect(0,0,oC.width,oC.height);
+
+        //link画出来
+        links.forEach(link=>{
+          gd.beginPath();
+
+          gd.moveTo(link.source.x, link.source.y);
+          gd.lineTo(link.target.x, link.target.y);
+
+          gd.strokeStyle='#999';
+          gd.stroke();
+        });
+
+        //node本身
+        nodes.forEach(node=>{
+          gd.beginPath();
+
+          gd.arc(node.x, node.y, 3, 0, Math.PI*2, true);
+          gd.fillStyle='black';
+          gd.fill();
+
+          gd.font='20px 宋体';
+          gd.fillText(node.name, node.x, node.y);
+        });
+      });
+    }
+    </script>
+  </head>
+  <body>
+    <canvas id="c1" width="800" height="600"></canvas>
+  </body>
+</html>
