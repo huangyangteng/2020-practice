@@ -11,15 +11,37 @@ const routes = [
         redirect: '/video-timeline',
     },
     {
-        path: '/vuex-demo',
-        label: 'vuex测试',
-        component: () => import('../vuex-demo/vuex-demo.vue'),
+        path: '/test-video',
+        label: '判断视频能不能播放',
+        component: () => import('../other/test-video.vue'),
+    },
+    {
+        path: '/canvas-rule',
+        label: 'canvas根据规则渲染',
+        component: () => import('../canvas-demo/canvas-rule.vue'),
+    },
+    {
+        path: '/canvas-animation',
+        label: 'canvas animation image',
+        component: () => import('../canvas-demo/animation/animate-image.vue'),
+    },
+    {
+        path: '/canvas-base',
+        label: 'canvas基础',
+        component: () => import('../canvas-demo/canvas-base.vue'),
     },
     {
         path: '/opacity-video',
         label: 'canvas视频背景',
-        component: () => import('../canvas-video/opacity-video.vue'),
+        component: () => import('../canvas-demo/opacity-video.vue'),
     },
+
+    {
+        path: '/vuex-demo',
+        label: 'vuex测试',
+        component: () => import('../vuex-demo/vuex-demo.vue'),
+    },
+
     {
         path: '/base',
         component: () => import('../drag-demo/drag-base.vue'),
