@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+
+//-----同步写法👇
+const execSync=require('child_process').execSync
+
+const res=execSync('ls')
+console.log("res", res.toString())
+
+
+// ----- 异步写法👇
+const exec=require('child_process').exec
+exec('ls',(err,stdout,stderr)=>{
+   if(err)throw err
+   console.log(stdout)
+})

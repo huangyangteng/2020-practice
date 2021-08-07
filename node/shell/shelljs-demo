@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+const shell=require('shelljs')
+
+
+/**
+ * 函数签名：exec(command [, options] [, callback])
+ * command:要执行的命令
+ * callback:回调函数，对command的输出进行处理
+ * options:
+ *  async: 异步执行.如果callback提供了，会忽略该参数并强制异步执行  (default: false)
+ *  fatal: Exit upon error (default: false).
+ *  silent: 不在console中输出(default: false).
+ *  encoding: 设置stdout和stderr的编码 (default: 'utf8')
+ */
+
+shell.exec('ls',{silent:true},(code,stdout,stderr)=>{
+    console.log(code)
+    console.log(stdout)
+})

@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path=require('path')
 
+const shell=require('shelljs')
 
 function walkSync(currentDirPath, callback) {
     fs.readdirSync(currentDirPath).forEach(function (name) {
@@ -15,11 +16,20 @@ function walkSync(currentDirPath, callback) {
         }
     });
 }
+
+function getNewPath(path){
+    const tmp=path.split('/')
+    const fileName=tmp.pop()
+    newFileName=fileName.replace('aabb','')
+    return tmp.join('/')+'/'+newFileName
+}
 ;(function(){
     const [nodeEnv,dir,...args]=process.argv
     // 获取用户输入的路径
     const folder=args[0]
+    if(!folder)throw Error('请提供文件夹路径!')
     walkSync(folder,(filePath,stat)=>{
-        // 在这里对文件进行处理,filePath是文件路径，stat是文件的信息
+        //重命名操作： 1aabb.html -> 1.html 即去除aabb
+        shell.exec(`mv ${filePath} ${getNewPath(filePath)}`)
     })
 }())
