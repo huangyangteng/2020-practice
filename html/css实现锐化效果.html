@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style> 
+.foo, .bar, .bar::after, .baz {
+  width: 512px;
+  height: 512px;
+  position: absolute;
+}
+.foo,.bar.{
+    
+}
+
+.foo {
+  z-index: 1;
+  mix-blend-mode: luminosity;
+  opacity: 0;
+  overflow: hidden;
+  filter: contrast(1.25);
+}
+
+.foo:hover { opacity: 0.5; }
+
+.bar, .bar::after, .baz {
+  background: url(http://111.229.14.189/file/2.jpg);
+  background-size: 100% 100%;
+}
+
+.bar::after {
+  content: '';
+  filter: blur(4px) invert(1) contrast(.75);
+  mix-blend-mode: overlay;
+}
+.img:hover{
+    image-rendering: pixelated;
+}
+    </style>
+</head>
+<body>
+    <div class="foo">
+        <div class="bar"></div>
+      </div>
+      <div class="baz">
+
+      </div>
+
+      
+      <img class="img" style="margin-left:600px;" src="http://111.229.14.189/file/2.jpg" alt="" srcset="">
+</body>
+</html>

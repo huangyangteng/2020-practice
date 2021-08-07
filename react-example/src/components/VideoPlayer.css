@@ -1,0 +1,10 @@
+.video-wrapper{
+    width:800px;
+}
+.video-wrapper>video{
+    width: 100%;
+}
+
+.video-controls{
+    margin-top: 20px;
+}

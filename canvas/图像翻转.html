@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+    <br>
     <canvas id="canvas" width="600" height="600">
     </canvas>
     <img style="display: none;" id="img" src="http://111.229.14.189/file/2.jpg" alt="" id="img">
@@ -26,19 +27,12 @@
             /** @type {HTMLImageElement} */
             let img=document.getElementById('img')
             console.log("img", img)
-            // 图片宽200 高200 
-            // 原本位置 100,100
-            //-100,-100
             img.onload=function(){
                 console.log('img on load')
                 ctx.save()
                 ctx.scale(-1,1)
-                ctx.translate(200,200)
-                ctx.rotate(10*Math.PI/180)
-                ctx.drawImage(img,-100,-100,200,200)
+                ctx.drawImage(img,-300,100,200,200)
                 ctx.restore()
-
-
 
             }
         })()

@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path=require('path')
+
+
+function walkSync(currentDirPath, callback) {
+    fs.readdirSync(currentDirPath).forEach(function (name) {
+        var filePath = path.join(currentDirPath, name);
+        var stat = fs.statSync(filePath);
+        if (stat.isFile()) {
+            callback(filePath, stat);
+        } else if (stat.isDirectory()) {
+            walkSync(filePath, callback);
+        }
+    });
+}
+;(function(){
+    const [nodeEnv,dir,...args]=process.argv
+    // 获取用户输入的路径
+    const folder=args[0]
+    walkSync(folder,(filePath,stat)=>{
+        // 在这里对文件进行处理,filePath是文件路径，stat是文件的信息
+    })
+}())

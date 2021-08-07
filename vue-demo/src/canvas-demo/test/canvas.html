@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<style>
+    body{ background-color: ivory; }
+    #canvas{border:1px solid red; }
+</style>
+<script>
+window.onload=(function(){
+
+    function log(){console.log.apply(console,arguments);}
+
+    // canvas variables
+    var canvas=document.getElementById("canvas");
+    var ctx=canvas.getContext("2d");
+    var cw=canvas.width;
+    var ch=canvas.height;
+    // set canvas styling
+    ctx.strokeStyle='skyblue';
+    ctx.lineJoint='round';
+    ctx.lineCap='round';
+    ctx.lineWidth=6;
+
+    // handle windows scrolling & resizing
+    function reOffset(){
+        var BB=canvas.getBoundingClientRect();
+        offsetX=BB.left;
+        offsetY=BB.top;        
+    }
+    var offsetX,offsetY;
+    reOffset();
+    window.onscroll=function(e){ reOffset(); }
+    window.onresize=function(e){ reOffset(); }
+
+    // vars to save points created during mousemove handling
+    var points=[];
+    var lastLength=0;
+
+    // start the  animation loop
+    requestAnimationFrame(draw);
+
+    canvas.onmousemove=function(e){handleMouseMove(e);}
+
+
+    function handleMouseMove(e){
+        // tell the browser we're handling this event
+        e.preventDefault();
+        e.stopPropagation();
+
+        // get the mouse position
+        mouseX=parseInt(e.clientX-offsetX);
+        mouseY=parseInt(e.clientY-offsetY);
+
+        // save the mouse position in the points[] array
+        // but don't draw anything
+        points.push({x:mouseX,y:mouseY});
+    }
+
+    function draw(){
+        // No additional points? Request another frame an return
+        console.log("draw -> points", points)
+        var length=points.length;
+        if(length==lastLength){requestAnimationFrame(draw);return;}
+        
+        // draw the additional points
+        var point=points[lastLength];
+        ctx.beginPath();
+        ctx.moveTo(point.x,point.y)
+        for(var i=lastLength;i<length;i++){
+            point=points[i];
+            ctx.lineTo(point.x,point.y);
+        }
+        ctx.stroke();
+        
+        // request another animation loop
+        requestAnimationFrame(draw);
+    }
+
+}); // end window.onload
+</script>
+</head>
+<body>
+    <h4>Move mouse over Canvas to sketch</h4>
+    <canvas id="canvas" width=512 height=512></canvas>
+</body>
+</html>

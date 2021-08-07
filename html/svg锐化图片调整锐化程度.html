@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- https://stackoverflow.com/questions/29599794/how-to-sharpen-an-image-in-css -->
+    <svg width='600' height='400'>
+        <defs>
+            <filter id="sharpen">
+                <feConvolveMatrix order="3 3" divisor="1" in="SourceGraphic" targetX="1" targetY="1"
+                kernelMatrix="0 -0.15 0 
+                -0.15 2 -0.15 
+                0 -0.15 0"  />
+            </filter>
+        </defs>
+        <image style="filter: url(#sharpen);"  width='600' height='400' xlink:href='https://images.westend61.de/0000859335pw/close-up-of-full-shopping-cart-in-grocery-store-CAIF15555.jpg'></image>
+    </svg>
+</body>
+</html>

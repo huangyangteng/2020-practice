@@ -11,6 +11,21 @@ const routes = [
         redirect: '/video-timeline',
     },
     {
+        path: '/tip/mixin',
+        label: 'mixin',
+        component: () => import('../tips/usage2/Edit.vue'),
+    },
+    {
+        path: '/parent-child',
+        label: 'child传递使用箭头函数',
+        component: () => import('../other/parent.vue'),
+    },
+    {
+        path: '/canvas-drag',
+        label: 'canvas-drag',
+        component: () => import('../canvas-demo/canvas-drag.vue'),
+    },
+    {
         path: '/test-video',
         label: '判断视频能不能播放',
         component: () => import('../other/test-video.vue'),
@@ -24,6 +39,11 @@ const routes = [
         path: '/canvas-animation',
         label: 'canvas animation image',
         component: () => import('../canvas-demo/animation/animate-image.vue'),
+    },
+    {
+        path: '/canvas-animation-clock',
+        label: 'canvas animation clock',
+        component: () => import('../canvas-demo/animation/animate-clock.vue'),
     },
     {
         path: '/canvas-base',

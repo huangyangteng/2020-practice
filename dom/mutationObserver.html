@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MutationObserver</title>
+    <style>
+        #box{
+            height: 300px;
+            background: pink;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        // 监听box
+        const box=document.getElementById('box')
+        let observer=new MutationObserver((mutations)=>{
+            mutations.forEach(m=>{
+                console.log(m)
+            })
+
+        })
+        observer.observe(box,{
+            childList: true,
+            attributes: true,
+
+            // Omit (or set to false) to observe only changes to the parent node
+            subtree: true
+            })
+    </script>
+</body>
+</html>

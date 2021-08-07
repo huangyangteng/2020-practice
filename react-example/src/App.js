@@ -3,7 +3,7 @@ import './App.css';
 // import NestedRouter from './page/router-demo/nested-router.jsx';
 // import ParamsRouter from './page/router-demo/params-router';
 // import ListenPage from './page/listen/listen.jsx'
-import ReduxDemoPage from './redux-demo/redux-demo-page';
+// import ReduxDemoPage from './redux-demo/redux-demo-page';
 // import FunctionalComponent from './components/FunctionalComponent'
 // import ClassComponent from './components/ClassComponent'
 // import Query from './components/Query'
@@ -11,6 +11,7 @@ import ReduxDemoPage from './redux-demo/redux-demo-page';
 // import ConditionRender from './components/ConditionRender'
 // import List from './components/List'
 // import User from './page/user/user';
+import VideoPlayer from './components/VideoPlayer';
 
 
 
@@ -29,7 +30,8 @@ function App() {
         {/* <NestedRouter></NestedRouter> */}
         {/* <ParamsRouter></ParamsRouter> */}
         {/* <ListenPage></ListenPage> */}
-        <ReduxDemoPage></ReduxDemoPage>
+        {/* <ReduxDemoPage></ReduxDemoPage> */}
+        <VideoPlayer src="http://111.229.14.189/file/test.mp4"></VideoPlayer>
     </div>
   );
 }

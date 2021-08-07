@@ -32,13 +32,11 @@
             img.onload=function(){
                 console.log('img on load')
                 ctx.save()
-                ctx.scale(-1,1)
-                ctx.translate(200,200)
+
+                ctx.translate(200,200)//- (w*1/2+x)  - (h*1/2)+y
                 ctx.rotate(10*Math.PI/180)
-                ctx.drawImage(img,-100,-100,200,200)
+                ctx.drawImage(img,-100,-100,200,200)//-1/2w  -1/2h
                 ctx.restore()
-
-
 
             }
         })()

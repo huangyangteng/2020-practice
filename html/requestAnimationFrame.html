@@ -15,23 +15,57 @@
         </style>
     </head>
     <body>
-        <div id="box" class="box"></div>
+       
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <span id="text"></span>
         <script>
-            const element = document.getElementById('box')
-            let start=null
-            function animation(timestamp) {
-                console.log("animation -> timestamp", timestamp)
-                if(!start){//赋初始值
-                    start=timestamp
-                    console.log("animation -> start", start)
-                }
-                const duration=timestamp-start
-                if(duration<5000){
-                    window.requestAnimationFrame(animation)
-                }
+            const duration=100 //间隔
+            let  nextTime=0 //下次执行时间
+            let pause=false
+            let curTime=0
+            const maxTime=10
+            const speed=0.1
+            function start(){
+                // 1.
+                pause=false
+                requestAnimationFrame(loop)
             }
-            //浏览器告诉你什么时候执行动画
-            window.requestAnimationFrame(animation)
+            function stop(){
+                pause=true
+            }
+
+
+            function loop(currentTime){
+                // 
+                if(currentTime<nextTime){
+                    requestAnimationFrame(loop)
+                    return 
+                }
+                nextTime=currentTime+duration
+                if(!pause){
+                    animateLogic()
+                }
+                requestAnimationFrame(loop)
+            }
+
+            function animateLogic(){
+                if(curTime>=maxTime-speed){
+                    pause=true
+                    curTime=0
+                    return 
+                }
+                curTime+=speed
+                document.getElementById('text').innerText=curTime
+                console.log("animateLogic -> curTime", curTime)
+                
+            }
+
+
+
+            
+         
+            
         </script>
     </body>
 </html>

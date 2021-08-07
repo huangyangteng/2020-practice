@@ -18,7 +18,9 @@
 import './style/common.less'
 export default {
     name: 'App',
-
+    data() {
+        return { url: '', offset: 10, left: 10 }
+    },
     computed: {
         menus() {
             return this.$router.options.routes.filter((item) => !item.hide)

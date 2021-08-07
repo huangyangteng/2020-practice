@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .edit {
+            width: 200px;
+            border: 1px solid yellowgreen;
+            outline: none;
+            height: auto;
+            font-size: 20px;
+            line-height: 2;
+            margin:40px auto;
+            caret-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="edit">双击编辑文字</div>
+
+
+    <script>
+        const box=document.getElementById('box')
+        // 双击编辑文字
+        box.ondblclick=function(){
+            // 1.文本框(div)为可编辑的
+            box.contentEditable=true
+
+            // 2. 获取光标
+            box.focus()
+
+
+             // 3. 选中所有文字
+             const selection=window.getSelection()
+            //  创建一个range对象
+             const range=document.createRange()
+             // 选中节点
+            range.selectNodeContents(box)
+            selection.removeAllRanges()
+            // 把给定的dom范围添加到选区
+            selection.addRange(range)
+        }
+        // 鼠标失去焦点
+        box.onblur=function(){
+            box.contentEditable=false
+            window.getSelection().removeAllRanges()
+        }
+    </script>
+</body>
+</html>

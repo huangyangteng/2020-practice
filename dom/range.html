@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ::selection {
+            background: #1593ff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <p id="box">我燃烧了<b>一颗恒星</b>来向你说道别</p>
+
+
+    <script>
+        const box=document.getElementById('box')
+        const b=box.querySelector('b')
+        const selection=window.getSelection()
+        // 控制选中范围
+        const range=document.createRange()
+        // selectNodeContents 控制选中的元素
+        range.selectNodeContents(b)
+        selection.addRange(range)
+       
+    </script>
+</body>
+</html>

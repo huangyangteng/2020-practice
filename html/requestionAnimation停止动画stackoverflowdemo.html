@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="start">start</button>
+        <button id="stop">stop</button>
+        <div id="time"></div>
+        <script>
+            // 停止动画：https://stackoverflow.com/questions/10735922/how-to-stop-a-requestanimationframe-recursion-loop
+
+            const timeElem = document.querySelector('#time')
+            var requestId
+
+            function loop(time) {
+                requestId = undefined
+
+                doStuff(time)
+                start()
+            }
+
+            function start() {
+                if (!requestId) {
+                    requestId = window.requestAnimationFrame(loop)
+                }
+            }
+
+            function stop() {
+                if (requestId) {
+                    window.cancelAnimationFrame(requestId)
+                    requestId = undefined
+                }
+            }
+
+            function doStuff(time) {
+                timeElem.textContent = (time * 0.001).toFixed(2)
+            }
+
+            document
+                .querySelector('#start')
+                .addEventListener('click', function () {
+                    start()
+                })
+
+            document
+                .querySelector('#stop')
+                .addEventListener('click', function () {
+                    stop()
+                })
+        </script>
+    </body>
+</html>

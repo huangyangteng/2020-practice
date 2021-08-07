@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="start()">start</button>
+    <button onclick="stop()">stop</button>
+    <script>
+        // 停止动画：https://stackoverflow.com/questions/10735922/how-to-stop-a-requestanimationframe-recursion-loop
+
+        // 间隔一定时间的动画
+        var nextTime=0;      // 下次动画执行开始时间
+        var duration=1000;   // 时间间隔，没1000ms执行一次
+
+        var requestId
+
+        function animate(currentTime){
+            requestId = undefined
+
+            if(currentTime<nextTime){
+                start()
+                return 
+            }
+            nextTime=currentTime+duration
+
+            doSomeThing()
+
+            start()
+        }
+        function start(){
+            if(!requestId){
+                requestId=window.requestAnimationFrame(animate)
+            }
+        }
+        function stop(){
+            if (requestId) {
+                window.cancelAnimationFrame(requestId);
+                requestId = undefined;
+            }
+        }
+
+        function doSomeThing(){//里面写动画的具体执行逻辑
+            console.log(+new Date())
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            div {
+                filter: url(#unsharpy);
+            }
+
+            #sample-image {
+                margin-left: 50px;
+                width: 600px;
+                height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <img
+        id="sample-image"
+        src="https://images.westend61.de/0000859335pw/close-up-of-full-shopping-cart-in-grocery-store-CAIF15555.jpg"
+    />
+        <div>
+            <img
+                id="sample-image"
+                src="https://images.westend61.de/0000859335pw/close-up-of-full-shopping-cart-in-grocery-store-CAIF15555.jpg"
+            />
+        </div>
+
+        <svg>
+            <defs>
+                <filter id="unsharpy">
+                    <feGaussianBlur
+                        result="blurOut"
+                        in="SourceGraphic"
+                        stdDeviation="5"
+                    />
+                    <feComposite
+                        operator="arithmetic"
+                        k1="0"
+                        k2="1.3"
+                        k3="-0.3"
+                        k4="0"
+                        in="SourceGraphic"
+                        in2="blurOut"
+                    />
+                </filter>
+            </defs>
+        </svg>
+        <!-- <svg>
+            <defs>
+                <filter id="sharpy">
+                    <feConvolveMatrix order="3" kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"/>
+                </filter>
+            </defs>
+        </svg> -->
+    </body>
+</html>
