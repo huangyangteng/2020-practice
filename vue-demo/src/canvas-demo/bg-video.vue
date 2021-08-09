@@ -1,14 +1,8 @@
 <template>
     <section class="opacity-video">
-        <canvas class="my-canvas" id="mycanvas"></canvas>
+        <canvas id="mycanvas"></canvas>
         <img id="image" src="../resource/necklace.jpeg" style="display: none" />
         <!-- <audio src="../resource/among_the_stars.mp4"></audio> -->
-        <img
-            style="z-index: 1"
-            src="http://10.1.69.42:12302/material/2021-07-29/202107_13677777777_n7bvemWcnBw11KO0SlkKciwitutQM0rwAQcOKbtNB1E7chnxKM.jpeg"
-            alt=""
-            srcset=""
-        />
         <video
             @loadedmetadata="videoOnLoad"
             v-show="false"
@@ -70,8 +64,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.my-canvas {
-}
 .opacity-video {
     margin: 0;
     width: 1200px;
@@ -87,6 +79,5 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    mix-blend-mode: screen;
 }
 </style>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <style>
+        .wrapper{
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+            position: relative;
+        }
+        .canvas{
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+           
+        }
+    </style>
+</head>
+<body>
+    <div class='wrapper'>
+        <img style="width: 500px;" src="http://10.1.69.42:12302/material/2021-07-29/202107_13677777777_n7bvemWcnBw11KO0SlkKciwitutQM0rwAQcOKbtNB1E7chnxKM.jpeg" alt="" srcset="">
+        <canvas width='960' height='480' id='canvas' class='canvas'></canvas>
+    </div>
+    <script>
+        /** @type {HTMLCanvasElement} */
+        const canvas=document.getElementById('canvas')
+        const CW=canvas.width
+        const CH=canvas.height
+        /** @type {CanvasRenderingContext2D} */
+        const ctx=canvas.getContext('2d')
+        // ---logic
+        ;(function(){
+            
+        }())
+    </script>
+</body>
+</html>
