@@ -11,6 +11,11 @@ const routes = [
         redirect: '/video-timeline',
     },
     {
+        path: '/query-list',
+        label: '查询列表demo',
+        component: () => import('../query-list/query-list.vue'),
+    },
+    {
         path: '/tip/mixin',
         label: 'mixin',
         component: () => import('../tips/usage2/Edit.vue'),

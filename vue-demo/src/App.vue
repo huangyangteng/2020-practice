@@ -53,7 +53,7 @@ body {
     background: #2c3e50;
     color: #fff;
     a {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         margin-bottom: 10px;
     }
