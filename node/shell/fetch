@@ -20,7 +20,7 @@ function fetchList(){
         -H 'referer: https://juejin.cn/' \
         -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7' \
         -H 'cookie: _ga=GA1.2.151728167.1605962485; n_mh=QqqO9vdPyoUgGdMUK7bmzGg_3PdkxHeXQjID5mYHilk; MONITOR_WEB_ID=f9b5a304-d583-464d-ac25-bd0fc1849132; passport_csrf_token_default=6ae74227ec74685add0271300bf1f275; passport_csrf_token=6ae74227ec74685add0271300bf1f275; sid_guard=5d56b314e811199a40ac8d4a1a03774b%7C1627264731%7C5184000%7CFri%2C+24-Sep-2021+01%3A58%3A51+GMT; uid_tt=df38a08a79a50cfc2bde3f330d5cef2c; uid_tt_ss=df38a08a79a50cfc2bde3f330d5cef2c; sid_tt=5d56b314e811199a40ac8d4a1a03774b; sessionid=5d56b314e811199a40ac8d4a1a03774b; sessionid_ss=5d56b314e811199a40ac8d4a1a03774b; _gid=GA1.2.1703676324.1627819267; _tea_utm_cache_2608={%22utm_source%22:%2220210803%22%2C%22utm_medium%22:%22Push%22%2C%22utm_campaign%22:%2231day%22}' \
-        --data-raw '{"id_type":2,"client_type":2608,"sort_type":3,"cursor":"0","limit":20}' \
+        --data-raw '{"id_type":2,"client_type":2608,"sort_type":3,"cursor":"0","limit":1}' \
         --compressed
     `
 }
@@ -28,6 +28,9 @@ function fetchList(){
 ;(function(){
     shell.exec(fetchList(),{silent:true},(code,stdout)=>{
         if(code!==0)throw new Error('调用接口失败')
-        console.log(stdout)
+        // console.log(stdout)
     })
+    const res=shell.exec(fetchList(),{silent:true})
+    const {err_no,data}=JSON.parse(res)
+    console.log("err_no,data", err_no,data)
 }())
