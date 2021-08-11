@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Document</title>
+    <style>
+        .wrapper{
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+        }
+        .canvas{
+            position: absolute;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            mix-blend-mode:screen;
+           
+        }
+    </style>
+</head>
+<body>
+  
+    <div class='wrapper'>
+        <img style="width: 400px;" src="http://10.1.69.42:12302/material/2021-07-29/202107_13677777777_n7bvemWcnBw11KO0SlkKciwitutQM0rwAQcOKbtNB1E7chnxKM.jpeg" alt="" srcset="">
+        <canvas width='960' height='480' id='canvas' class='canvas'></canvas>
+    </div>
+    <button onclick="play()">play</button>
+    <button onclick="pause()">pause</button>
+    <script>
+        /** @type {HTMLCanvasElement} */
+        const canvas=document.getElementById('canvas')
+        const CW=canvas.width
+        const CH=canvas.height
+        /** @type {CanvasRenderingContext2D} */
+        const ctx=canvas.getContext('2d')
+        // ---logic
+        const src='http://localhost:8882/diyvrbt/material/petal.mp4'
+        let isPause=true
+        function loop(){
+            if(!isPause){
+                // 执行渲染逻辑
+                ctx.drawImage(videoDom,0,0,CW,CH)
+            }
+            requestAnimationFrame(loop)
+        }
+        function play(){
+            videoDom.play()
+            isPause=false
+        }
+        function pause(){
+             isPause=true
+        }
+        function loadResource(src){
+            let video=document.createElement('video')
+            video.src=src
+            return new Promise(resolve=>{
+                video.onloadedmetadata=function(){
+                    resolve(video)
+                }
+            })
+
+        }
+        let videoDom=null
+
+        ;(async function(){
+            videoDom=await loadResource(src)
+            requestAnimationFrame(loop)
+        }())
+    </script>
+</body>
+</html>
