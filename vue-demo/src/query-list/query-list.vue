@@ -22,7 +22,6 @@ export default {
             list: [],
         }
     },
-    computed: {},
     methods: {
         async getList(id = -1) {
             const res = await axios.request({
@@ -33,25 +32,6 @@ export default {
                 },
             })
             this.list = res.data
-        },
-        async getVideo(e) {
-            let formdata = new FormData()
-            formdata.append('file', e.target.files[0])
-            formdata.append('type', 'curve')
-            formdata.append(
-                'info',
-                JSON.stringify([
-                    { from: 0, to: 7, speed: 8 },
-                    { from: 7, to: 10, speed: 0.5 },
-                ])
-            )
-            const res = await axios.request({
-                url: 'http://10.4.6.144:12302/material/speedVideo',
-                method: 'POST',
-                data: formdata,
-                responseType: 'blob',
-            })
-            this.src = URL.createObjectURL(res.data)
         },
         handleChange(id) {
             this.getList(id)

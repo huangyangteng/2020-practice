@@ -1,10 +1,13 @@
-import './App.css';
+import React from 'react'
+import './App.css'
+import QueryList from './query-list/QueryList';
 
 function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+    return (
+        <div className="App">
+           <QueryList></QueryList>
+        </div>
+    )
 }
 
-export default App;
+export default App
