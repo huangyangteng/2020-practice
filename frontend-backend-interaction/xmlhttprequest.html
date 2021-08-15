@@ -1,0 +1,40 @@
+<script>
+    const TEST_URL = 'http://111.229.14.189/gk-api/util/test'
+    const TOKEN = 'Beard facajjdfjdjfjajdfj238u3284'
+    // 测试数据
+    const TEST_DATA = {
+        json: JSON.stringify({ name: 'Jack', password: '123456' }),
+        url: 'name=Anna&password=123456'
+    }
+    const CONTENT_TYPE = {
+        json: 'application/json',
+        url: 'application/x-www-form-urlencoded'
+    }
+    // -------------------code 
+    ;(function () {
+
+        // 1. 实例化XMLHttpRequest对象
+        const xhr = new XMLHttpRequest()
+
+        // 2. 初始化一个请求 xhrReq.open(method, url, async);
+        xhr.open('POST', TEST_URL)
+
+        // 3. 设置请求头
+        xhr.setRequestHeader('Content-type', CONTENT_TYPE.url)
+        xhr.setRequestHeader('token', TOKEN) //自定义请求头
+
+        // 4. 发送请求
+        xhr.send(TEST_DATA.url)
+
+        // 5. 获取响应
+        xhr.onload = function () {
+            if (xhr.readyState == 4) {
+                console.log('所有响应头', xhr.getAllResponseHeaders())
+                console.log('单个响应头', xhr.getResponseHeader('content-type'))
+                console.log('响应体类型',typeof xhr.response)
+                console.log('响应体', xhr.response)
+                document.write(xhr.response)
+            }
+        }
+    })()
+</script>

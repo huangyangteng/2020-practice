@@ -3,7 +3,7 @@ import Query from './QueryHook'
 import List from './ListHook'
 import axios from 'axios'
 
-function App1(){
+function QueryListHook(){
     const [list,setList]=useState([])
 
     // 每次有状态变更就会执行
@@ -13,14 +13,6 @@ function App1(){
       
     },[])//添加一个空数组,只会执行一次,相当于声明周期的 componentDidMount
 
-    useEffect(()=>{
-      // 监听 // document.addEventListener(dom,xxx)
-      return ()=>{
-        // 取消监听  // document.removeEventListener(dom,xxx)
-      }
-    },[])
-
-  
     const  getList=async(id=-1)=>{
         const res=await axios.request({
           method:'get',
@@ -45,4 +37,4 @@ function App1(){
 
 }
 
-export default App1;
+export default QueryListHook;
