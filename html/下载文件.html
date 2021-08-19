@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="http://111.229.14.189/file/axios.min.js"></script>
+    </head>
+    <body>
+        <button id="downloadCustom">下载自定义内容</button>
+        <button id="downloadExcel">下载excel</button>
+        <button id="downloadPic">下载图片</button>
+        <script>
+            //提供一个链接用户下载内容
+            function download(link, name) {
+                if (!name) {
+                    //如果没有提供名字，从给的Link中截取最后一坨
+                    name = link.slice(link.lastIndexOf('/') + 1)
+                }
+                let eleLink = document.createElement('a')
+                eleLink.download = name
+                eleLink.style.display = 'none'
+                eleLink.href = link
+                document.body.appendChild(eleLink)
+                eleLink.click()
+                document.body.removeChild(eleLink)
+            }
+            function downloadFile(name, content) {
+                if (typeof name == 'undefined') {
+                    throw new Error('The first parameter name is a must')
+                }
+                if (typeof content == 'undefined') {
+                    throw new Error('The second parameter content is a must')
+                }
+                if (!(content instanceof Blob)) {
+                    content = new Blob([content])
+                }
+                const link = URL.createObjectURL(content)
+                download(link, name)
+            }
+
+            function downloadByLink(link, fileName) {
+                axios
+                    .request({
+                        url: link,
+                        responseType: 'blob'
+                    })
+                    .then((res) => {
+                        const link = URL.createObjectURL(res.data)
+                        download(link, fileName)
+                    })
+            }
+
+            // 下载自定义的字符串
+            function downloadCustom() {
+                // 可以用来下载JSONString html等内容，只要是字符串都可以下载
+                const json = JSON.stringify({ name: 'xiaoming', age: 11 })
+                downloadFile('1.json', json)
+            }
+            //下载浏览器不会默认预览的文件，例如excel,word,ppt
+            function downloadExcel() {
+                download('http://111.229.14.189/file/1.xlsx')
+            }
+            // 下载浏览器会默认执行预览的文件，例如
+            function downloadPic() {
+                // 需要转发才可以，否则会有同源策略
+                downloadByLink('http://111.229.14.189/file/1.jpeg')
+            }
+
+            ;(function () {
+                document.getElementById(
+                    'downloadCustom'
+                ).onclick = downloadCustom
+                document.getElementById('downloadExcel').onclick = downloadExcel
+                document.getElementById('downloadPic').onclick = downloadPic
+            })()
+        </script>
+    </body>
+</html>

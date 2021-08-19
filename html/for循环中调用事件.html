@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+       <article class="article">
+            <h1>标题标题1</h1>
+            <section>内容内容1</section>
+       </article>
+       <article class="article">
+            <h1>标题标题2</h1>
+            <section>内容内容2</section>
+       </article>
+       <article class="article">
+            <h1>标题标题3</h1>
+            <section>内容内容3</section>
+       </article>
+       <article class="article">
+            <h1>标题标题4</h1>
+            <section>内容内容4</section>
+       </article>
+       <article class="article">
+            <h1>标题标题5</h1>
+            <section>内容内容5</section>
+       </article>
+
+        <button id="btn" onclick="clickBtn()">按钮</button>
+        <button onclick="run()">run</button>
+        <script>
+             function downloadFile(name, content) {
+                if (typeof name == 'undefined') {
+                    throw new Error('The first parameter name is a must')
+                }
+                if (typeof content == 'undefined') {
+                    throw new Error('The second parameter content is a must')
+                }
+                if (!(content instanceof Blob)) {
+                    content = new Blob([content])
+                }
+                const link = URL.createObjectURL(content)
+                download(link, name)
+            }
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+            //下载一个链接
+            function download(link, name) {
+                if (!name) {
+                    name = getFileName(link)
+                }
+                let eleLink = document.createElement('a')
+                eleLink.download = name
+                eleLink.style.display = 'none'
+                eleLink.href = link
+                document.body.appendChild(eleLink)
+                eleLink.click()
+                document.body.removeChild(eleLink)
+            }
+            // ------------------------------
+            function clickBtn() {
+                console.log('click me')
+            }
+            const btn = document.getElementById('btn')
+                const  run=async ()=> {
+                    for (let i = 0; i < 20; i++) {
+                        console.log(i)
+                        await sleep(2000)
+                        downloadFile(i+'.html','hahhahah'+i)
+                        await sleep(2000)
+                        document.getElementById('btn').click()
+                    }
+                }
+           
+        </script>
+    </body>
+</html>

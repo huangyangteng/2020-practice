@@ -1,19 +1,28 @@
-module.exports = {
+//接口服务器
+const API_SERVER='http://111.229.14.189'
+//文件服务器
+const FILE_SERVER='http://111.229.14.189'
+
+module.exports={
     devServer: {
+        //只在开发时有效，打包后失效
+        open: true, //自动打开浏览器
         proxy: {
-            '/migu-monitor': {
-                target: 'http://c.musicapp.migu.cn/MIGUM2.0/v1.0',
+            '/file':{
+                target: FILE_SERVER, //开发环境后端接口地址
                 changeOrigin: true,
                 autoRewrite: true,
                 cookieDomainRewrite: true,
-                pathRewrite: {
-                    '^/migu-monitor': '',
-                },
             },
-        },
+            '/my-custom-prefix':{
+                target: API_SERVER, //开发环境后端接口地址
+                changeOrigin: true,
+                autoRewrite: true,
+                cookieDomainRewrite: true,
+                pathRewrite:{
+                    '^/my-custom-prefix': ''
+                }
+            }
+        }
     },
 }
-
-// location /migu-monitor {
-//     proxy_pass http://c.musicapp.migu.cn/MIGUM2.0/v1.0/
-// }
