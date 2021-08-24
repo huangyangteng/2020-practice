@@ -12,7 +12,12 @@ export default {
     },
     computed: {},
     methods: {},
-    created() {},
+    created() {
+        const userInfo=localStorage.getItem('user')
+        if(userInfo){
+            // 提交Mutation,更新用户信息
+        }
+    },
 }
 </script>
 
