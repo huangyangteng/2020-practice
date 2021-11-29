@@ -23,7 +23,6 @@ export default {
     },
     computed: {
         menus() {
-            console.log(this.$router)
             return this.$router.options.routes.filter((item) => !item.hide)
         },
         curMenu() {

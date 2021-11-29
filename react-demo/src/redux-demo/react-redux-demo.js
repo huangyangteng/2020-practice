@@ -11,7 +11,6 @@
 
 import {store} from './simple-store'
 import { Provider,useSelector,useDispatch } from 'react-redux';
-import {  } from 'react-redux';
 
 
 export const ReactReduxDemo=()=>{
@@ -19,7 +18,6 @@ export const ReactReduxDemo=()=>{
         <App></App>
     </Provider>
 }
-
 function App(){
     return <section>
         <h1>react redux </h1>
@@ -36,5 +34,6 @@ function ChildCounter(){
         <button onClick={()=>{dispatch({type:'add'})}}>add</button>
         <span>{count}</span>
         <button onClick={()=>{dispatch({type:'reduce'})}}>reduce</button>
+
     </section>
 }

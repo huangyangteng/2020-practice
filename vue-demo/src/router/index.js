@@ -8,7 +8,27 @@ const routes = [
         path: '/',
         label: '首页',
         hide: true,
-        redirect: '/video-timeline',
+        redirect: '/vdr-test',
+    },
+    {
+        path: '/test',
+        label: 'test',
+        component: () => import('../other/vue-color'),
+    },
+    {
+        path: '/request-animation',
+        label: 'request-animation',
+        component: () => import('../animation/request-animation'),
+    },
+    {
+        path: '/scroll',
+        label: '无限滚动',
+        component: () => import('../vue-scroll/vue-scroll.vue'),
+    },
+    {
+        path: '/vdr-test',
+        label: 'vdr源码',
+        component: () => import('../vdr-test/vdr-code/test-vdr'),
     },
     {
         path: '/query-list',

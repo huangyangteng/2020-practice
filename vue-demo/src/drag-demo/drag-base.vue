@@ -23,6 +23,7 @@
             box2
         </div>
         <!-- 画布 -->
+        <img src="http://111.229.14.189/file/1.jpeg" alt="" srcset="">
         <div
             @drop="handleDrop"
             @dragover="handleDragOver"
@@ -66,7 +67,9 @@ export default {
         handleDrop(e) {
             e.preventDefault()
             e.stopPropagation()
+            console.log("handleDrop -> e.dataTransfer.getData('index')", e.dataTransfer.getData('index'))
             const index = e.dataTransfer.getData('index')
+            console.log("handleDrop -> index", index)
             this.canvasElements.push(this.elements[index])
         },
         handleDragOver(e) {

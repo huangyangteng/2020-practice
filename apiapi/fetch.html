@@ -1,0 +1,40 @@
+<script>
+    const TEST_URL = 'http://111.229.14.189/gk-api/util/test'
+    const TOKEN = 'Beard facajjdfjdjfjajdfj238u3284'
+    // 测试数据
+    const TEST_DATA = {
+        json: JSON.stringify({ name: 'Jack', password: '123456' }),
+        url: 'name=Anna&password=123456'
+    }
+    const CONTENT_TYPE = {
+        json: 'application/json',
+        url: 'application/x-www-form-urlencoded'
+    }
+
+    const getData = function () {
+        fetch(TEST_URL, {
+            method: 'POST',
+            headers: {
+                token: TOKEN,
+                'Content-type': CONTENT_TYPE.url
+            },
+            body: TEST_DATA.url
+        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((res) => {
+                console.log('res', res)
+            })
+    }
+    const getData1 = async () => {
+        //async await 写法
+        const res = await (await fetch(TEST_URL)).json()
+        console.log('getData1 -> res', res)
+    }
+    // -------------------code
+    ;(function () {
+        getData()
+        getData1()
+    })()
+</script>

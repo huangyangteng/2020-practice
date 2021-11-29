@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                />
+                <title>Document</title>
+                <style>
+                    @keyframes mask-to-right {
+                        0% {
+                            mask-position: 0%;
+                            -webkit-mask-position: 0%;
+                        }
+
+                        100% {
+                            mask-position: 100%;
+                            -webkit-mask-position: 100%;
+                        }
+                    }
+                    @keyframes mask-to-left {
+                        0% {
+                            mask-position: 100%;
+                            -webkit-mask-position: 100%;
+                        }
+
+                        100% {
+                            mask-position: 0%;
+                            -webkit-mask-position: 0%;
+                        }
+                    }
+
+                    .box {
+                        width: 500px;
+                        height: 300px;
+                        background-color: aquamarine;
+                        mask-image: linear-gradient(
+                            to right,
+                            rgb(0, 0, 0, 0),
+                            rgb(0, 0, 0, 0) 45%,
+                            rgba(0, 0, 0, 1) 50%,
+                            rgba(0, 0, 0, 1) 55%,
+                            rgba(0, 0, 0, 1)
+                        );
+                        -webkit-mask-image: linear-gradient(
+                            to right,
+                            rgb(0, 0, 0, 0),
+                            rgb(0, 0, 0, 0) 45%,
+                            rgba(0, 0, 0, 1) 50%,
+                            rgba(0, 0, 0, 1) 55%,
+                            rgba(0, 0, 0, 1)
+                        );
+                        -webkit-mask-size: 0;
+                        mask-size: 200% 100%;
+                        -webkit-mask-size: 210% 100%;
+
+                        -webkit-mask-position: 100% 100%;
+                    }
+                    .mask-animation {
+                        animation: mask-to-left 2s linear;
+                    }
+                    .mask-animation-right{
+                        animation: mask-to-right 2s linear;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div
+                    style="
+                        width: 500px;
+                        height: 300px;
+                        background: linear-gradient(
+                            to right,
+                            rgb(0, 0, 0, 0),
+                            rgb(0, 0, 0, 0) 45%,
+                            rgba(0, 0, 0, 1) 50%,
+                            rgba(0, 0, 0, 1) 55%,
+                            rgba(0, 0, 0, 1)
+                        );
+                    "
+                >
+                    111
+                </div>
+                <button id="btn" style="margin-bottom: 20px;">执行动画</button>
+                <div class="box">
+                    <img
+                        src="http://111.229.14.189/file/2.jpg"
+                        alt=""
+                        srcset=""
+                    />
+                </div>
+                <script>
+                    document.getElementById('btn').onclick = function () {
+                        document
+                            .querySelector('.box')
+                            .classList.add('mask-animation')
+                        setTimeout(() => {
+                            document
+                                .querySelector('.box')
+                                .classList.remove('mask-animation')
+                        }, 2000)
+                    }
+                </script>
+            </body>
+        </html>
+    </body>
+</html>

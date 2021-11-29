@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input id="input" />
+        <script>
+            /**
+             *
+             * @param {*} func 要进行debouce的函数
+             * @param {*} wait 等待时间
+             * @param {*} immediate 是否立即执行
+             */
+            function debounce(func, wait = 500, immediate) {
+                var timeout
+                return function () {
+                    var context = this
+                    var args = arguments
+
+                    if (timeout) clearTimeout(timeout)
+                    if (immediate) {
+                        // 如果已经执行过，不再执行
+                        var callNow = !timeout
+                        timeout = setTimeout(function () {
+                            timeout = null
+                        }, wait)
+                        if (callNow) func.apply(context, args)
+                    } else {
+                        timeout = setTimeout(function () {
+                            func.apply(context, args)
+                        }, wait)
+                    }
+                }
+            }
+            function onInput() {
+                console.log('1111')
+            }
+            const debounceOnInput = debounce(onInput)
+            document
+                .getElementById('input')
+                .addEventListener('input', debounceOnInput)
+        </script>
+    </body>
+</html>

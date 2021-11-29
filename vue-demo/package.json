@@ -7,7 +7,8 @@
     "dev": "vue-cli-service serve",
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "format": "npx onchange '**/*' -- npx prettier --write {{changed}}"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -15,6 +16,9 @@
     "mavon-editor": "^2.9.1",
     "video-editing-timeline": "^0.1.10",
     "vue": "^2.6.11",
+    "vue-color": "^2.8.1",
+    "vue-draggable-resizable": "^2.3.0",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.6.2"
   },

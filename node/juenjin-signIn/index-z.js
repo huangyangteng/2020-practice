@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 const shell=require('shelljs')
-const COOKIE=`your cookie`
+const COOKIE=`_ga=GA1.2.151728167.1605962485; n_mh=QqqO9vdPyoUgGdMUK7bmzGg_3PdkxHeXQjID5mYHilk; MONITOR_WEB_ID=f9b5a304-d583-464d-ac25-bd0fc1849132; passport_csrf_token_default=f7679ca6394e8f00f3b61853da4865b1; passport_csrf_token=f7679ca6394e8f00f3b61853da4865b1; passport_auth_status=41ec0aa013d3886d2ae85f2b7fad2b69%2C; passport_auth_status_ss=41ec0aa013d3886d2ae85f2b7fad2b69%2C; sid_guard=4941bc071d2ca76217c24dd9e1924ec6%7C1632449312%7C5184000%7CTue%2C+23-Nov-2021+02%3A08%3A32+GMT; uid_tt=4f56b2c75e01fa983c834fb38dbff797; uid_tt_ss=4f56b2c75e01fa983c834fb38dbff797; sid_tt=4941bc071d2ca76217c24dd9e1924ec6; sessionid=4941bc071d2ca76217c24dd9e1924ec6; sessionid_ss=4941bc071d2ca76217c24dd9e1924ec6; sid_ucp_v1=1.0.0-KGY2MTkyYWNlMmFjZmNkNDQxNWI1OWM3YjZhMDI4ZWU1NGI1NTkyNjEKFwjn6bC__fXlBxCg5rSKBhiwFDgCQPEHGgJsZiIgNDk0MWJjMDcxZDJjYTc2MjE3YzI0ZGQ5ZTE5MjRlYzY; ssid_ucp_v1=1.0.0-KGY2MTkyYWNlMmFjZmNkNDQxNWI1OWM3YjZhMDI4ZWU1NGI1NTkyNjEKFwjn6bC__fXlBxCg5rSKBhiwFDgCQPEHGgJsZiIgNDk0MWJjMDcxZDJjYTc2MjE3YzI0ZGQ5ZTE5MjRlYzY; _tea_utm_cache_2608={%22utm_source%22:%22juejinjiang_pyq2%22%2C%22utm_medium%22:%22wechat%22%2C%22utm_campaign%22:%22zhuanti_xingneng_20211011%22}; _gid=GA1.2.1272688293.1634610733`
 const {sendErrorEmail,sendSuccessEmail}=require('./node-email')
 // 签到
 function signIn(){

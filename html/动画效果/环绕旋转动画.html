@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./环绕动画.css">
+</head>
+<body>
+    <section>
+        <div class="star-animate">
+            <div class="out_circle">
+              <div class="nav_circle r1">
+                <img class="center-img1" src="http://111.229.14.189/gk-files/upload_73d761c7484f872fdb861e9dca896c40.png"/>
+                <div class="img_top img">
+                  <img src="http://111.229.14.189/gk-files/upload_79864280e49c338441c9519785bbb3fe.png"/>
+                </div>
+                <div class="img_bottom img">
+                    <img src="http://111.229.14.189/gk-files/upload_79864280e49c338441c9519785bbb3fe.png"/>
+                </div>
+                <div class="img_bottom2 img">
+                    <img src="http://111.229.14.189/gk-files/upload_79864280e49c338441c9519785bbb3fe.png"/>
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+    <script>
+        const outWidth=document.querySelector('.out_circle').offsetWidth
+        document.querySelector('.out_circle').style.height=outWidth+'px'
+        // 获取半径
+        const rWidth = outWidth / 2
+        // 获得弧度
+        const radian = 2 * Math.PI / 360 * 60
+        // 长边
+        const langWidth = Math.sin(radian) * rWidth
+
+        // icon的长度
+        const icon=document.querySelector('.img_top')
+        const iconWidth=icon.offsetWidth
+        
+        icon.style.top=0-iconWidth/2 +'px'
+        icon.style.left=rWidth-iconWidth/2  +'px'
+
+        const img_bottom=document.querySelector('.img_bottom')
+       
+
+        img_bottom.style.top=rWidth*1.5-iconWidth/2 +'px'
+        img_bottom.style.left=rWidth-langWidth-iconWidth + 'px'
+
+        const img_bottom2=document.querySelector('.img_bottom2')
+        img_bottom2.style.top=rWidth*1.5-iconWidth/2 +'px'
+        img_bottom2.style.left=outWidth-(rWidth-langWidth)-iconWidth + 'px'
+
+
+
+        
+    </script>
+</body>
+</html>

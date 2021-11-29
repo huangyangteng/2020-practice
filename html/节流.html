@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <input id="input" />
+        <script>
+            /**
+             * 节流，多次触发，间隔时间段执行
+             * @param {Function} func
+             * @param {Int} wait
+             * @param {Object} options
+             */
+            function throttle(func, wait = 500, options) {
+                //container.onmousemove = throttle(getUserAction, 1000);
+                var timeout, context, args
+                var previous = 0
+                if (!options) options = { leading: false, trailing: true }
+
+                var later = function () {
+                    previous =
+                        options.leading === false ? 0 : new Date().getTime()
+                    timeout = null
+                    func.apply(context, args)
+                    if (!timeout) context = args = null
+                }
+
+                var throttled = function () {
+                    var now = new Date().getTime()
+                    if (!previous && options.leading === false) previous = now
+                    var remaining = wait - (now - previous)
+                    context = this
+                    args = arguments
+                    if (remaining <= 0 || remaining > wait) {
+                        if (timeout) {
+                            clearTimeout(timeout)
+                            timeout = null
+                        }
+                        previous = now
+                        func.apply(context, args)
+                        if (!timeout) context = args = null
+                    } else if (!timeout && options.trailing !== false) {
+                        timeout = setTimeout(later, remaining)
+                    }
+                }
+                return throttled
+            }
+            function onInput() {
+                console.log('1111')
+            }
+            const throttleOnInput = throttle(onInput)
+            document
+                .getElementById('input')
+                .addEventListener('input', throttleOnInput)
+        </script>
+    </body>
+</html>

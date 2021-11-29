@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="./axios.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const STREAM_URL = 'http://111.229.14.189/gk-api/util/download'
+            const TEST_URL = 'http://111.229.14.189/gk-api/util/test'
+            // 处理普通数据
+            function sendRequest() {
+                let formData = new FormData()
+                formData.append('name', 'Jack')
+                axios
+                    .request({
+                        url: TEST_URL,
+                        method: 'post',
+                        headers: {
+                            token: 'ajdjfjdfjj'
+                        },
+                        params: {
+                            page: 1,
+                            pageSize: 10
+                        },
+                        data: {
+                            name:'Jack',
+                            age:11
+                        }
+                    })
+                    .then((res) => {
+                        console.log(res.data.data)
+                    })
+            }
+
+            // 处理流
+            const handleStream = async () => {
+                const FILE_NAME='1.jpg'
+                const res = await axios.request({
+                    url: STREAM_URL,
+                    params: { file: FILE_NAME },
+                    responseType: 'blob' //这条语句需要加上，告诉axios返回的数据类型是blob,否则需要手动把后端返回的数据转换成blob
+                })
+                console.log(res)
+                // 把流转换为链接
+                const previewLink = URL.createObjectURL(res.data)
+                console.log("handleStream -> previewLink", previewLink)
+                // 预览
+                previewElement(previewLink, 'img')
+                // 下载
+                download(previewLink,FILE_NAME)
+            }
+
+            function previewElement(link, tag) {
+                const ele = document.createElement(tag)
+                ele.src = link
+                if (tag == 'video') {
+                    ele.controls = true
+                }
+                document.documentElement.appendChild(ele)
+            }
+
+            function download(link, name) {
+                let eleLink = document.createElement('a')
+                eleLink.download = name
+                eleLink.style.display = 'none'
+                eleLink.href = link
+                document.body.appendChild(eleLink)
+                eleLink.click()
+                document.body.removeChild(eleLink)
+            }
+            // --------------------code:
+            ;(function () {
+                sendRequest()
+                // handleStream()
+            })()
+        </script>
+    </body>
+</html>

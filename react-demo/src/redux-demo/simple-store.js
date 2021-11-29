@@ -10,12 +10,12 @@ import { createStore } from 'redux';
 
 const initState={value:0}
 
-const counterReducer=(state=initState,action)=>{
-    switch (action.type) {
+const counterReducer=(state=initState,{type,value=1})=>{
+    switch (type) {
         case 'add':
-            return {value:state.value+1}
+            return {value:state.value+value}
         case 'reduce':  
-        return {value:state.value-1}
+        return {value:state.value-value}
     
         default:
            return state
@@ -28,9 +28,9 @@ export const store=createStore(counterReducer)
 store.subscribe(()=>{console.log(store.getState())})
 
 
-store.dispatch({type:'add'})
+// store.dispatch({type:'add',value:2})
 
-store.dispatch({type:'reduce'})
+// store.dispatch({type:'reduce',value:3})
 
 // 问题：1. 如何在store中传递多个reducer
 // 2. 如何将redux用于react中

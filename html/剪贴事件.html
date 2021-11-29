@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #editable-div {
+    border: solid 1px #444444;
+    min-height: 50px;
+    border-radius: 8px;
+    padding: 10px;
+}
+        </style>
+    </head>
+    <body>
+        <div id="editable-div" contenteditable>
+        </div>
+        <script>
+           var editable = document.getElementById('editable-div')
+                var pasteHandler = function (e) {
+                    if(typeof e.clipboardData == 'undefined'){
+                        pastedText = window.clipboardData.getData('text')
+                        console.log("pasteHandler -> pastedText", pastedText)
+                        return 
+                    }
+                    if (e.clipboardData && e.clipboardData.getData) {
+                        var pastedText = ''
+                        if (
+                            window.clipboardData &&
+                            window.clipboardData.getData
+                        ) {
+                            // IE
+                            pastedText = window.clipboardData.getData('Text')
+                        } else if (e.clipboardData && e.clipboardData.getData) {
+                            pastedText = e.clipboardData.getData('text/plain')
+                        }
+
+                        alert(pastedText)
+                    } else {
+                        alert('Not paste object!')
+                    }
+                }
+                editable.addEventListener('paste', pasteHandler, false)
+        </script>
+    </body>
+</html>

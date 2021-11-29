@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Document</title>
+    <script src=" https://cdn.jsdelivr.net/npm/d3-selection@3"></script>
+
+
+    <style>
+        .svgClaas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div style='width:500px;height:300px' id='svgBox'>
+        <!-- <svg></svg> -->
+        <img style="display: block;width:500px;height:300px" id="img"
+            src="http://www.kkkk1000.com/images/mask-image/1534750163.jpg" alt="">
+    </div>
+
+    <button onclick="myclick()">点我</button>
+
+    <script>
+        const picWidth = 500,
+            picHeight = 300
+        const findPoints = function (w, h) {
+            let step = Math.floor(w / 10)
+            let d_str = `M ${-step} ${-step} `
+            let i_w = 0,
+                i_h = 0,
+                i = 0
+
+            let distance = getDistance(0, 0, -step, -step)
+
+            while (step * i < w + step && step * i < h + step) {
+                let temp_w = `L ${step*i} 0 `
+                let temp_h = `L 0 ${step*i} `
+                d_str = d_str + temp_w + temp_h
+                i++
+                distance = distance + getDistance(step * i, 0, 0, step * i)
+            }
+            i_w = i, i_h = i
+            while (step * i_w < w + step || step * i_h < h + step) {
+                let temp_w = '',
+                    temp_h = ''
+                if (step * i < w + step) {
+                    temp_w = `L ${step*i_w} 0 `
+                    temp_h = `L ${Math.floor(step/3)+step*(i_w-i)} ${step*i_h} `
+                    i_w++
+                    distance = distance + getDistance(step * i_w, 0, Math.floor(step / 3) + step * (i_w - i), step *
+                        i_h)
+
+                } else {
+                    temp_w = `L ${step*i_w} ${Math.floor(step/3)+step*(i_h-i)} `
+                    temp_h = `L 0 ${step*i_h} `
+                    i_h++
+                    distance = distance + getDistance(step * i_w, Math.floor(step / 3) + step * (i_h - i), 0, step *
+                        i_h)
+                }
+                d_str = d_str + temp_w + temp_h
+
+            }
+            let z = 0
+            while ((Math.floor(step / 3) + step * (i_w - i) + step * z) < w + step && (Math.floor(step / 3) +
+                    step *
+                    (i_h - i) + step * z) <= h + step) {
+
+                let temp_w = `L ${step*i_w} ${Math.floor(step/3)+step*(i_h-i)+step*z} `
+                let temp_h = `L ${Math.floor(step/3)+step*(i_w-i)+step*z}  ${step*i_h} `
+                d_str = d_str + temp_w + temp_h
+                distance = distance + getDistance(step * i_w, Math.floor(step / 3) + step * (i_h - i) + step * z,
+                    Math.floor(
+                        step / 3) + step * (i_w - i) + step * z, step * i_h)
+                z++
+            }
+
+            return {
+                d_str,
+                distance
+            }
+        }
+
+        function getDistance(x1, y1, x2, y2) {
+            let x = x2 - x1
+            let y = y2 - y1
+            return Math.pow((x * x + y * y), 0.5)
+        }
+
+        let {
+            d_str,
+            distance
+        } = findPoints(picWidth, picHeight)
+        
+        // const svg=document.createElement('svg')
+
+        function createSvg(picWidth, picHeight, domBoxId, domImgId, d_str, distance, imgUrl) {
+        console.log("createSvg -> domBoxId", domBoxId)
+
+            //隐藏图片素材
+            d3.select(domImgId).style('display', 'none')
+            //svg 
+            console.log(d3.select(domBoxId).append('svg')) //svg的dom元素
+
+            let svg = d3.select(domBoxId).append('svg').attr('viewBox', `0 0 ${picWidth} ${picHeight}`)
+                .attr('width', picWidth)
+                .attr('height', picHeight)
+                .attr('preserveAspectRatio', 'none')
+                .attr('class', 'svgClaas')
+
+            let mask = svg.append('defs').append('mask').attr('id', 'mask1')
+
+            let myPath = mask.append('path').attr('stroke', 'white').attr('stroke-linejoin', 'round')
+                .attr('fill', 'none')
+                .attr('opacity', 1)
+                .attr('d', d_str)
+                .attr('stroke-width', Math.floor(picWidth / 10))
+                .attr('stroke-dasharray', `${distance*2} ${distance*2}`)
+                .attr('stroke-dashoffset', 0)
+
+            myPath.append('animate')
+                .attr('attributeType', "CSS")
+                .attr('attributeName', "stroke-dashoffset")
+                .attr('from', distance * 2)
+                .attr('to', 0)
+                .attr('dur', '5s')
+                .attr('repeatCount', 1)
+
+            svg.append('g')
+                .style('mask', "url(#mask1)")
+                .append('image')
+                .attr('xlink:href', imgUrl)
+                .attr('width', picWidth)
+                .attr('height', picHeight)
+        }
+
+        function myclick() {
+            createSvg(picWidth, picHeight, '#svgBox', '#img', d_str, distance,
+                'http://www.kkkk1000.com/images/mask-image/1534750163.jpg')
+        }
+    </script>
+</body>
+
+</html>

@@ -4,6 +4,7 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
     "lodash": "^4.17.21",
+    "react": "^17.0.2",
     "sort-keys-recursive": "^2.1.1",
     "wavesurfer.js": "^4.6.0"
   },
