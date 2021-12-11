@@ -98,6 +98,11 @@ const routes = [
         label: '拖拽移动元素',
     },
     {
+        path:'/canvas-select',
+        component: () => import('../drag-demo/canvas-select.vue'),
+        label: '画布选中'
+    },
+    {
         path: '/premise',
         component: () => import('../drag-demo/premise.vue'),
         label: '预制知识',

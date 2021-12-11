@@ -6,7 +6,7 @@
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll'
-export default {
+export default { 
     name: 'vue-scroll',
     directives:{infiniteScroll},
     data() {
