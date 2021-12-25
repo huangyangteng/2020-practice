@@ -1,7 +1,23 @@
 const shell = require('shelljs')
 const schedule = require('node-schedule')
-
-// 签到
+function view1(article_id) {
+    return `
+    curl 'https://api.juejin.cn/content_api/v1/article/detail?aid=2608&uuid=6998124906836215333' \
+-X 'POST' \
+-H 'Accept: */*' \
+-H 'Content-Type: application/json' \
+-H 'Origin: https://juejin.cn' \
+-H 'Cookie: _ga=GA1.2.151728167.1605962485; n_mh=QqqO9vdPyoUgGdMUK7bmzGg_3PdkxHeXQjID5mYHilk; MONITOR_WEB_ID=f9b5a304-d583-464d-ac25-bd0fc1849132; passport_csrf_token_default=475afad86e7b82a259c908d9a48072d1; passport_csrf_token=475afad86e7b82a259c908d9a48072d1; passport_auth_status=9853df20faa39109c1ae9beff5bc65ca%2C; passport_auth_status_ss=9853df20faa39109c1ae9beff5bc65ca%2C; sid_guard=25749090957f5566fafdd476795c629b%7C1637734009%7C5184000%7CSun%2C+23-Jan-2022+06%3A06%3A49+GMT; uid_tt=b49d1d72d9a353ed7906d5623567c214; uid_tt_ss=b49d1d72d9a353ed7906d5623567c214; sid_tt=25749090957f5566fafdd476795c629b; sessionid=25749090957f5566fafdd476795c629b; sessionid_ss=25749090957f5566fafdd476795c629b; sid_ucp_v1=1.0.0-KDg3MTQ1NjNkODVjODRiMWU1YWNhMDI0ZTVjOWNhY2IwMThmYWUzYTcKFwjn6bC__fXlBxD5rPeMBhiwFDgCQPEHGgJsZiIgMjU3NDkwOTA5NTdmNTU2NmZhZmRkNDc2Nzk1YzYyOWI; ssid_ucp_v1=1.0.0-KDg3MTQ1NjNkODVjODRiMWU1YWNhMDI0ZTVjOWNhY2IwMThmYWUzYTcKFwjn6bC__fXlBxD5rPeMBhiwFDgCQPEHGgJsZiIgMjU3NDkwOTA5NTdmNTU2NmZhZmRkNDc2Nzk1YzYyOWI; _gid=GA1.2.345609871.1638437496; _tea_utm_cache_2608={%22utm_source%22:%22feed_1%22%2C%22utm_medium%22:%22feed%22%2C%22utm_campaign%22:%22nzzj_yq_2021%22}' \
+-H 'Content-Length: 36' \
+-H 'Accept-Language: zh-cn' \
+-H 'Host: api.juejin.cn' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15' \
+-H 'Referer: https://juejin.cn/post/7041883967926042660' \
+-H 'Accept-Encoding: gzip, deflate, br' \
+-H 'Connection: keep-alive' \
+--data-binary '{"article_id":"7041883967926042660"}'
+    `
+}
 function view(article_id) {
     return `
     curl 'https://api.juejin.cn/content_api/v1/article/detail?aid=2608&uuid=6998124906836215333' \

@@ -63,6 +63,7 @@ body {
     position: relative;
     // border: 2px solid red;
     flex: 1;
+    overflow-y: auto;
 }
 .router-link-active {
     color: #f5222d !important;

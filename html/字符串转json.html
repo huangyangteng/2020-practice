@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            const svgCode=`
+        <svg viewBox='0 0 1920 1080'    id='m7iNwi6G' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>\n 
+            <rect stroke='rgba(0,0,0,1)' stroke-width='1' fill='rgba(0,0,0,0)' rx='0' ry='0' width='90%' height='90%' x='5%' y='5%'>
+            </rect>\n            
+        </svg>
+        
+`
+let res=mapDOM('<div>hello <p id="aaa">aaa</p></div>')
+console.log(res)
+
+            function mapDOM(element, json=false) {
+                let treeObject = {}
+
+                // 将字符串转成DOM树
+                if (typeof element === 'string') {
+                    if (window.DOMParser) {
+                        parser = new DOMParser()
+                        docNode = parser.parseFromString(element, 'text/xml')
+                    } else {
+                        //兼容IE
+                        docNode = new ActiveXObject('Microsoft.XMLDOM')
+                        docNode.async = false
+                        docNode.loadXML(element)
+                    }
+                    element = docNode.firstChild
+                }
+
+                function treeHTML(element, object) {
+                    object['type'] = element.nodeName
+                    // 获取当前节点的子元素
+                    //因为不需要,所以去除了HTML中自带的文本节点
+                    //如果需要文本节点下面一行代码改成  let nodeList=element.childNodes
+                    let nodeList = element.children
+                    console.log(nodeList)
+                    if (nodeList != null) {
+                        if (nodeList.length) {
+                            object['content'] = []
+                            for (let i = 0; i < nodeList.length; i++) {
+                                //如果是元素节点
+                                if (nodeList[i].nodeType == 3) {
+                                    object['content'].push(
+                                        nodeList[i].nodeValue
+                                    )
+                                } else {
+                                    object['content'].push({})
+                                    treeHTML(
+                                        nodeList[i],
+                                        object['content'][
+                                            object['content'].length - 1
+                                        ]
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    // 处理属性
+                    if (element.attributes != null) {
+                        if (element.attributes.length) {
+                            object['attributes'] = {}
+                            for (
+                                let i = 0;
+                                i < element.attributes.length;
+                                i++
+                            ) {
+                                object['attributes'][
+                                    element.attributes[i].nodeName
+                                ] = element.attributes[i].nodeValue
+                            }
+                        }
+                    }
+                }
+                treeHTML(element, treeObject)
+                return json ? JSON.stringify(treeObject) : treeObject
+            }
+        </script>
+    </body>
+</html>

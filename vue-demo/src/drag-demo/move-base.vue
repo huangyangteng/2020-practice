@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section style="overflow-y: auto">
         <mavon-editor
             v-bind="{
                 subfield: false,
@@ -7,11 +7,13 @@
             }"
             v-model="tip"
         />
-        <section style="position: relative">
+        <Button @click="getPosition">获取位置</Button>
+        <section class="drag-wrapper" style="position: relative" id="wrapper">
             <div
                 class="box"
                 :style="boxStyle"
                 @mousedown="handleMousedown"
+                id="box"
             ></div>
         </section>
     </section>
@@ -31,8 +33,8 @@ export default {
         return {
             tip: tip,
             pos: {
-                left: 0,
-                top: 0,
+                left: 100,
+                top: 100,
             },
         }
     },
@@ -78,9 +80,26 @@ export default {
             document.addEventListener('mousemove', move)
             document.addEventListener('mouseup', up)
         },
+        getPosition() {
+            const wrapperLeft = document
+                .getElementById('wrapper')
+                .getBoundingClientRect().left
+            console.log('getPosition -> wrapperLeft', wrapperLeft)
+            const childLeft =
+                document.getElementById('box').getBoundingClientRect().left - 1
+            console.log('getPosition -> childLeft', childLeft)
+
+            console.log('left', childLeft - wrapperLeft)
+        },
     },
     created() {},
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.drag-wrapper {
+    width: 800px;
+    height: 500px;
+    border: 1px solid #333;
+}
+</style>

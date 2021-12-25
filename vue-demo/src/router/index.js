@@ -11,6 +11,11 @@ const routes = [
         redirect: '/vdr-test',
     },
     {
+        path:'/dom-to-image',
+        label:'dom转图片',
+        component:()=>import('../tools/dom-to-image.vue')
+    },
+    {
         path: '/test',
         label: 'test',
         component: () => import('../other/vue-color'),

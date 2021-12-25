@@ -12,8 +12,24 @@
                 :w="200"
                 :h="200"
                 :onDragStart="onDragStartCallback"
+                style="border: 0"
             >
-                <p>vue-draggable-resizable</p>
+                <svg
+                    width="100%"
+                    height="100%"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 2000 2000"
+                >
+                    <rect
+                        width="90%"
+                        height="90%"
+                        x="5%"
+                        y="5%"
+                        fill="transparent"
+                        stroke="#6A707C"
+                        stroke-width="2"
+                    ></rect>
+                </svg>
             </vue-draggable-resizable>
         </div>
     </div>

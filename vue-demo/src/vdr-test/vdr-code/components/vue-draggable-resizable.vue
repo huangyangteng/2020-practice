@@ -29,7 +29,6 @@
             v-if="enabled && rotateable"
             :style="rotateIconStyle"
         ></div>
-        <div>{{ this.degree }}</div>
         <slot></slot>
     </div>
 </template>
