@@ -24,7 +24,7 @@ export default function App() {
                   {/* Switch只展示匹配到的第一个 */}
                     <Switch>
                         {/* Route属性 path  component */}
-                        <Route path="/about" component={About}></Route>
+                        <Route path="/about" component={About}/>
                        
                         <Route path="/users">
                             <Users />

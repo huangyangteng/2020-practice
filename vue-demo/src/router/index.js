@@ -11,9 +11,14 @@ const routes = [
         redirect: '/vdr-test',
     },
     {
-        path:'/dom-to-image',
-        label:'dom转图片',
-        component:()=>import('../tools/dom-to-image.vue')
+        path: '/gv6',
+        label: 'gv6测试',
+        component: () => import('../gv6/gv6.vue'),
+    },
+    {
+        path: '/dom-to-image',
+        label: 'dom转图片',
+        component: () => import('../tools/dom-to-image.vue'),
     },
     {
         path: '/test',
@@ -103,9 +108,9 @@ const routes = [
         label: '拖拽移动元素',
     },
     {
-        path:'/canvas-select',
+        path: '/canvas-select',
         component: () => import('../drag-demo/canvas-select.vue'),
-        label: '画布选中'
+        label: '画布选中',
     },
     {
         path: '/premise',
