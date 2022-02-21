@@ -1,15 +1,12 @@
-import './App.css';
-import {Switch, BrowserRouter as Router, Route} from "react-router-dom";
-import Home from "./views/celt/home/Home";
-import Farm from "./views/celt/farm/Farm";
+import './App.less';
+import {Switch, HashRouter as Router, Route} from "react-router-dom";
+import Celt from "./modules/celt/Celt";
 function App() {
     return (
         <Router>
             <div className="App">
-                <nav>nav</nav>
                 <Switch>
-                    <Route path={"/farm"} component={Farm} />
-                    <Route path={"/"} component={Home}/>
+                    <Route path={"/"} component={Celt}/>
                 </Switch>
             </div>
         </Router>

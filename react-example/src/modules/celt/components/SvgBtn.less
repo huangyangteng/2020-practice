@@ -1,0 +1,62 @@
+.square {
+  display:inline-block;
+  margin:5px;
+  width:155px;
+  height:35px;
+  position:relative;
+  vertical-align:top;
+  display: none;
+  svg {
+    overflow:visible;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+
+  rect {
+    fill:transparent;
+    stroke:#FB0;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation:change 5s linear forwards ;
+    rx:20%;
+    ry:20%;
+    //x:5%;
+    //y:5%;
+    width:100%;
+    height: 100%;
+  }
+}
+
+
+
+
+@keyframes change {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.testRect{
+  width: 78px;
+  height: 20px;
+  border-radius: 20px;
+  border:1px solid #fff;
+}
+.testSvg{
+  rect {
+    fill:transparent;
+    stroke:#FB0;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation:change 5s linear forwards infinite;
+    width:155px;
+    height: 35px;
+    rx:20px;
+    ry:20px;
+    x:10;
+    y:10;
+  }
+}

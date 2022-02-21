@@ -2,7 +2,7 @@ var m3u8ToMp4 = require("m3u8-to-mp4");
 var converter = new m3u8ToMp4();
 (async function() {
     await converter
-      .setInputFile("https://res001.geekbang.org//media/audio/3b/87/3b1729fc5eaa20f711b753f65d147d87/ld/ld.m3u8")
+      .setInputFile("https://media001.geekbang.org/371e2463193b4e96b9ae18db0b082a95/26f0c056892142999d626b249aa25220-7a367853e3a18ea8b89cecd50c17f588-ld-encrypt-stream.m3u8")
       .setOutputFile("dummy.mp4")
       .start();
    

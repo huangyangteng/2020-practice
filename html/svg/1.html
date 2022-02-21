@@ -10,6 +10,10 @@
             width:200px;
             height: 200px;
         }
+        svg {
+            /*overflow:visible;*/
+            /*margin:5px; !*half the stroke*!*/
+        }
     </style>
 </head>
 <body>
@@ -20,7 +24,9 @@
         <svg width="100" height="100" viewBox="0 0 100 100"> <rect width="100%" height="100%" fill="gold" /> <rect width="30" height="30" x="calc(50% - 15)" y="calc(50% - 15)" fill="green" /> </svg>
         
         <svg width="100" height="100" viewBox="0 0 100 100"> <rect width="100%" height="100%" fill="gold" /> <rect width="30" height="30" x="50%" y="50%" transform="translate(-15,-15)" fill="green" /> </svg> 
-
+        <svg>
+            <rect x="2" y="2" width="100" height="50" rx="10" stroke-width="2" stroke="#ff0000"  stroke-linejoin="round"></rect>
+        </svg>
     </div>
       
 </body>

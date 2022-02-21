@@ -21,7 +21,7 @@ export default  function ListenPage(){
 
     }
     return <section style={listWrapperStyle}>
-        <video id="video"  onPause={(e)=>{handlePause(e)}}  controls src={require('../../../asserts/videos/1.mp4').default}></video>
+        <video id="video"  onPause={(e)=>{handlePause(e)}}  controls src={require('../../../assets/videos/1.mp4').default}></video>
         <ul>
            {list.map((item,index)=>{
                return (<li onClick={()=>{handleClick(item)}}  style={liStyle} key={item+'_'+index}>{item}</li>)

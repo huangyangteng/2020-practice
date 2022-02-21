@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <style>
+        body {
+            background-color: lightblue;
+        }
+        .text-gradient {
+            background-image: linear-gradient(to bottom, blue, white, blue);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .text-gradient::before {
+            content: attr(text);
+            position: absolute;
+            z-index: -1;
+            text-shadow: 5px 5px 3px black;
+        }
+
+h1 {
+  font-size: 72px;
+  background-image: -webkit-linear-gradient(red, blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position:relative;  
+  display: inline-block;
+}
+
+h1::after {
+  content: attr(data-text);
+  z-index: -1;
+  position: absolute;
+  text-shadow: 5px 5px 3px black;
+  position: absolute;
+  width: 100%;
+  left:0
+}
+
+    </style>
+</head>
+<body>
+  <h1 data-text="哈哈哈哈">哈哈哈哈</h1>
+</body>
+</html>

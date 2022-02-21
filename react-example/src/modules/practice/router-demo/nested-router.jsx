@@ -64,10 +64,10 @@ function Topics() {
           </li>
         </ul>
   
-        {/* The Topics views has its own <Switch> with more routes
+        {/* The Topics modules has its own <Switch> with more routes
             that build on the /topics URL path. You can think of the
-            2nd <Route> here as an "index" views for all topics, or
-            the views that is shown when no topic is selected */}
+            2nd <Route> here as an "index" modules for all topics, or
+            the modules that is shown when no topic is selected */}
         <Switch>
           <Route path={`${match.path}/:topicId`}>
             <Topic />

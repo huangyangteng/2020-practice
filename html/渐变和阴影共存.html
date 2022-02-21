@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <style>
+        body {
+            background-color: lightblue;
+        }
+        .text-gradient {
+            background-image: linear-gradient(to bottom, blue, white, blue);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .text-gradient::before {
+            content: attr(text);
+            position: absolute;
+            z-index: -1;
+            text-shadow: 5px 5px 3px black;
+        }
+
+
+    </style>
+</head>
+<body>
+  <span class="text-gradient" text="文字渐变色+阴影">文字渐变色+阴影</span>
+</body>
+</html>
