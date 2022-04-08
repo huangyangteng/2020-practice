@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>mse</title>
+        <meta name="referrer" content="no-referrer">
+        <meta name="origin" content="https://pan.baidu.com">
+        <meta name="origin" content="https://pan.baidu.com">
+
+    </head>
+    <body>
+        <video controls id="video"></video>
+        <script>
+            const video = document.getElementById('video')
+            const mimeCode = 'video/mp4; codecs="avc1.4D401F, mp4a.40.2"'
+            // const assetURL = 'http://127.0.0.1:5502/small-ffmpeg.mp4'
+            // const assetURL = 'http://111.229.14.189/file/small-ffmpeg.mp4'
+            // const assetURL = 'https://nickdesaulniers.github.io/netfix/demo/frag_bunny.mp4'
+            const assetURL = 'http://localhost/bdy-video/video/netdisk-videotran-yangquan/ee8dabc8b837f091124b78a632a5ca75_1076_2_ts/f384e01e4f9d82c90acddd6665580cfc?ts_size=4349380&app_id=250528&clienttype=0&csl=0&dp-logid=413501057087281195&fn=11-3H264PPS%E4%B8%8ESlice-Header_2020-04-0916_32%E3%80%90%E5%BE%AE%E4%BF%A1535950311%E3%80%91.mp4&from_type=0&fsid=7860747018679&idc_c=1&isplayer=1&iv=2&logid=413501057087281195&mtime=1614240366&ouk=629995778&r=74563094&size=11685919&sta_cs=6&sta_dt=video&sta_dx=11&time=1646830578&to=84&tot=c0h0g&uo=cmnet&uva=3192549404&vuk=629995778&dtime=10&etag=f384e01e4f9d82c90acddd6665580cfc&fid=1265cbcf9ec24ac4ddd69402d16f97fd-629995778&len=158108&range=2203736-2361843&region=xian&sign=BOUTHNFI-F3530edecde9cd71b79378b290804a96-%252BHhOe0fkNE9kzVmMOlh5MHUZVmc%253D&need_suf=&pmk=1400f384e01e4f9d82c90acddd6665580cfc9954d56f000000425dc4&by=my-streaming'
+
+            const mediaSource = new MediaSource()
+            video.src = URL.createObjectURL(mediaSource)
+            mediaSource.addEventListener('sourceopen', sourceOpen)
+            function sourceOpen() {
+                var mediaSource = this
+                var sourceBuffer = mediaSource.addSourceBuffer(mimeCode)
+                fetchAB(assetURL, function (buf) {
+                    sourceBuffer.addEventListener('updateend', function () {
+                        console.log(mediaSource.readyState); // ended
+                        if(!sourceBuffer.updating && mediaSource.readyState==='open'){
+                            mediaSource.endOfStream()
+                            video.play()
+                        }
+                       
+                       
+                    })
+                    sourceBuffer.appendBuffer(buf)
+                })
+            }
+            function fetchAB(url, cb) {
+                var xhr = new XMLHttpRequest()
+                xhr.open('get', url)
+                xhr.responseType = 'arraybuffer'
+                xhr.onload = function () {
+                    cb(xhr.response)
+                }
+                xhr.send()
+            }
+        </script>
+    </body>
+</html>

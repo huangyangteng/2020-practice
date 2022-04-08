@@ -1,18 +1,31 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div class="home">
+        <TodoList v-if="false"></TodoList>
+        <VideoPreviewItem></VideoPreviewItem>
+        <!-- <vdr :w="100" :h="100"></vdr> -->
+    </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import TodoList from '@/components/TodoList.vue'
+// import vdr from 'vue-draggable-resizable'
+import VideoPreviewItem from '../components/VideoPreviewItem.vue'
+// console.log(vdr)
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
-  },
-};
+    name: 'Home',
+    data() {
+        return {
+            width: 0,
+            height: 0,
+            x: 0,
+            y: 0,
+        }
+    },
+    components: {
+        TodoList,
+        // vdr,
+        VideoPreviewItem,
+    },
+}
 </script>
