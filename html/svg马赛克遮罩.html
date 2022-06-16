@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            img {
+                width: 300px;
+                height: 300px;
+                
+            }
+            div{
+                width:100px;
+                height:100px;
+                position:absolute;
+                filter: url(#pixelate);
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://leexiao.site/file/2.jpg" alt="" />
+        <div></div></div>
+        <svg>
+            <filter id="pixelate" x="0" y="0">
+                <feFlood x="4" y="4" height="2" width="2" />
+                <feComposite width="8" height="8" />
+                <feTile result="a" />
+                <feComposite in="SourceGraphic" in2="a" operator="in" />
+                <feMorphology operator="dilate" radius="5" />
+            </filter>
+        </svg>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body{
+                background: #000;
+            }
+            .conic {
+                position: relative;
+                z-index: 0;
+                width: 200px;
+                height: 50px;
+                margin: 20px;
+                border-radius: 10px;
+                overflow: hidden;
+                padding: 2rem;
+            }
+            .conic::before {
+                content: '';
+                position: absolute;
+                z-index: -2;
+                left: -50%;
+                top: -50%;
+                width: 200%;
+                height: 200%;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                background-position: 0 0;
+                background-image: conic-gradient(
+                    transparent,
+                    rgba(168, 239, 255, 1),
+                    transparent 30%
+                );
+                animation: rotate 4s linear infinite;
+            }
+            .conic::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 6px;
+                top: 6px;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+                background: transparent;
+                border-radius: 5px;
+            }
+            @keyframes rotate {
+                100% {
+                    transform: rotate(1turn);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="conic"></div>
+    </body>
+</html>

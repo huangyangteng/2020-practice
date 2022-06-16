@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                background: #000;
+            }
+
+            div {
+                position: relative;
+                margin: auto;
+                width: 200px;
+                line-height: 60px;
+                text-align: center;
+                font-size: 24px;
+              
+            }
+            div::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 2px solid #fff;
+                transition: all 0.5s;
+                animation: clippath 3s infinite linear;
+                border-radius: 30px;
+            }
+
+            @keyframes clippath {
+                0%,
+                100% {
+                    clip-path: inset(0 0 95% 0);
+                }
+
+                25% {
+                    clip-path: inset(0 95% 0 0);
+                }
+                50% {
+                    clip-path: inset(95% 0 0 0);
+                }
+                75% {
+                    clip-path: inset(0 0 0 95%);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div>Hello</div>
+    </body>
+</html>

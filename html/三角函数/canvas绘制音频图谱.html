@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+        <style>
+            canvas {
+                width: 800px;
+                height: 200px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="canvas"></canvas>
+        <script>
+            let canvas = document.getElementById('canvas')
+            canvas.width = canvas.clientWidth
+            canvas.height = canvas.clientHeight
+            let { PI, cos } = Math
+            let colors = {
+                accent: '#4dbaed',
+                base: '#5c8abd',
+                dark: '#504e4e'
+            }
+
+            class Wave {
+                constructor(canvas) {
+                    this.canvas = canvas
+                    this.ctx = canvas.getContext('2d')
+                    this.buildFrame = this.buildFrame.bind(this)
+                    this.pointDx = 10
+                    this.speed = 0.001
+                    this.noise = new SimplexNoise()
+                    this.iteration = 0
+                    this.amplitude = 0 //振幅
+                    this.strands = []
+                }
+
+                addStrand(strand = new Strand()) {
+                    this.strands.push(strand)
+                }
+
+                drawWave(t, options = {}) {
+                    let { inverted, offset, amplitudeScalar, color } = options
+                    let sign = inverted ? -1 : 1
+                    let points = canvas.width / this.pointDx
+                    this.ctx.beginPath()
+                    this.ctx.moveTo(0, canvas.height / 2)
+                    for (let i = 0; i < points; i++) {
+                        let x = i * this.pointDx
+                        let noise = this.noise.noise2D(
+                            (i + this.iteration) / 100,
+                            (this.iteration + offset) / 100
+                        )
+                        let y =
+                            canvas.height / 2 -
+                            sign *
+                                this.envelopeScalar(x, amplitudeScalar) *
+                                noise
+                        this.ctx.lineTo(x, y)
+                    }
+                    this.ctx.strokeStyle = color
+                    this.ctx.stroke()
+                }
+
+                envelopeScalar(x, amplitudeScalar = 1) {
+                    return (
+                        this.amplitude *
+                        cos((3 * PI) / 2 + PI * (x / this.canvas.width)) *
+                        amplitudeScalar
+                    )
+                }
+
+                buildFrame(t) {
+                    if (this.amplitude > 0)
+                        requestAnimationFrame(this.buildFrame)
+                    this.ctx.clearRect(
+                        0,
+                        0,
+                        this.canvas.width,
+                        this.canvas.height
+                    )
+                    for (let i = 0; i < this.strands.length; i++) {
+                        this.drawWave(t, this.strands[i])
+                    }
+                    this.iteration++
+                }
+
+                animate() {
+                    this.amplitude += 1
+                    if (this.amplitude === 1) this.buildFrame()
+                    this.isActive = true
+                    this.animateTransition()
+                }
+
+                animateTransition() {
+                    let anim = function () {
+                        if (this.amplitude < 100 && this.amplitude > 0)
+                            requestAnimationFrame(anim)
+                        this.amplitude += this.isActive ? 1 : -1
+                    }
+                    anim = anim.bind(this)
+                    cancelAnimationFrame(this.transitionRAF)
+                    this.transitionRAF = requestAnimationFrame(anim)
+                }
+
+                close() {
+                    this.isActive = false
+                    this.animateTransition()
+                }
+            }
+
+            class Strand {
+                constructor(options) {
+                    this.amplitudeScalar = 1
+                    this.inverted = false
+                    this.offset = 0
+                    this.color = 'blue'
+                    Object.assign(this, options)
+                }
+            }
+
+            let wave = new Wave(canvas)
+            let options = [
+                { offset: 1, color: colors.accent },
+                // { offset: 5, color: colors.accent }
+                // { offset: 10, color: colors.accent },
+                // { offset: 50, color: colors.accent },
+                // { offset: 60, color: colors.accent },
+                // { offset: 600, color: colors.accent }
+            ]
+            options.forEach((option) => wave.addStrand(new Strand(option)))
+            wave.animate()
+        </script>
+    </body>
+</html>

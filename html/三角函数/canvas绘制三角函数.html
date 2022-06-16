@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <canvas
+            id="canvas"
+            width="500"
+            height="500"
+            style="background-color: #ccc"
+        ></canvas>
+        <script>
+            var xOffset = 0 // 水平位移    控制图像左右移动
+            var speed = 0.1
+            var waveWidth=0.05  // 数越小越宽 周期
+            var waveHeight = 8 // 振幅
+            /** @type {HTMLCanvasElement} */
+            const canvas = document.getElementById('canvas')
+            /** @type {CanvasRenderingContext2D} */
+            const ctx = canvas.getContext('2d')
+            ctx.strokeStyle = 'blue'
+            function drawSin(ctx) {
+                //y=波浪高度 * sin(x * 波浪宽度+水平位移)
+                const points = []
+                const canvasWidth = ctx.canvas.width
+                const canvasHeight = ctx.canvas.height
+                const startX = 0
+                // const waveWidth = 0.05 // 波浪宽度,数越小越宽 周期
+                // const waveHeight = 20 // 波浪高度,数越大越高  振幅
+                ctx.beginPath()
+                for (
+                    let x = startX;
+                    x < startX + canvasWidth;
+                    x += 20 / canvasWidth
+                ) {
+                    const y =
+                        waveHeight *
+                        Math.sin((startX + x) * waveWidth + xOffset)
+                    points.push([x, canvasHeight / 2 + y])
+                    ctx.lineTo(x, canvasHeight / 2 + y)
+                }
+                ctx.lineTo(canvasWidth, canvasHeight)
+                ctx.lineTo(startX, canvasHeight)
+                ctx.lineTo(points[0][0], points[0][1])
+                ctx.stroke()
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+                // 曲线绘制
+                drawSin(ctx, xOffset)
+                xOffset += speed
+                requestAnimationFrame(draw)
+            }
+
+            draw()
+        </script>
+    </body>
+</html>

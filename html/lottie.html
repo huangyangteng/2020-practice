@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lottie动画使用</title>
+</head>
+<body>
+    <div id="lottie"></div>
+    <script src="https://cdnjs.com/libraries/bodymovin"></script>
+   <script>
+        const animation = lottie.loadAnimation({
+            container:document.querySelector('#lottie'),
+            renderer:'svg/canvas/html',
+            path:'data.json',
+            loop:true,
+            autoplay:true,
+            name:'demo',
+            animationData:{}
+        })
+    </script>
+</body>
+</html>

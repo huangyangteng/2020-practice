@@ -11,11 +11,11 @@
     <anime-bounceInup v-if="false"></anime-bounceInup>
     <my-video v-if="false"></my-video>
     <layout v-if="false"></layout>
-    <request-animation v-if="true"></request-animation>
+    <request-animation v-if="false"></request-animation>
     <!-- <video-reverse-speed v-if="false"></video-reverse-speed> -->
     <!-- <echarts-line-drag v-if="false"></echarts-line-drag> -->
-    <vdr-multiple v-if="false"></vdr-multiple>
-    <vdr-multiple-compare v-if="false"></vdr-multiple-compare>
+    <vdr-multiple v-if="true"></vdr-multiple>
+<!--    <vdr-multiple-compare v-if="true"></vdr-multiple-compare>-->
     <vue-computed v-if="false"></vue-computed>
     <box-select v-if="false"></box-select>
   </div>

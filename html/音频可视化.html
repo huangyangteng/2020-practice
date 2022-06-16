@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频可视化</title>
+</head>
+<body>
+    <audio controls id="snd" src="../test-audio.mp3"></audio></audio>
+    <canvas width="800" height="200" style="background-color: #ccc" id="canvas"></canvas>
+    <button id="btn">播放</button>
+    <script>
+        var AudioContext = AudioContext || webkitAudioContext;
+        var audio = document.getElementById("snd");
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        var atx = new AudioContext();
+        var source = atx.createMediaElementSource(audio);
+        console.log("source", source)
+        var analyser = atx.createAnalyser();
+
+        source.connect(analyser);
+        analyser.connect(atx.destination);
+        analyser.fftSize = 2048;
+
+        function draw(){
+            if(!audio.paused){
+                var cWidth = canvas.width,
+                cHeight = canvas.height,
+                // frequencyBinCount的值固定为fftSize的一半
+                audioArray = new Uint8Array(analyser.frequencyBinCount);
+            // 解析频率数据，放入audioArray数组中
+            analyser.getByteTimeDomainData(audioArray);
+            console.log(audioArray)
+            // 填充为柱状图
+            ctx.clearRect(0,0,cWidth,cHeight);
+            for(var i = 0;i < audioArray.length;i ++){
+                ctx.fillRect(i*3,cHeight-audioArray[i],2,cHeight);
+            }
+            }
+          
+            // 刷新
+            requestAnimationFrame(draw);
+        }
+        
+        document.getElementById('btn').addEventListener('click',()=>{
+            console.log()
+            if(audio.paused){
+                audio.play()
+                 draw()
+            }else{
+                audio.pause()
+            }
+            
+        })
+
+    </script>
+</body>
+</html>

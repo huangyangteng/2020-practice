@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                background: #000;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            h1 {
+                color: #fff;
+                font-size: 14px;
+                letter-spacing: 0.3px;
+                background-image: linear-gradient(
+                    75deg,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(255, 255, 255, 1) 33.33%,
+                    rgba(255, 255, 255, 0) 66.67%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+                background-size: 300% 100%;
+                /* background-position-x: 100%; */
+
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                transition: 2s background-position-x ease-in-out;
+                animation: 2s textFade;
+            }
+            @keyframes textFade {
+                from {
+                    background-position-x: 100%;
+                }
+
+                to {
+                    background-position-x: 0%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Less bezel,more screen</h1>
+    </body>
+</html>
