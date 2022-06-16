@@ -1,5 +1,6 @@
 <template>
     <section style="position: relative">
+        left:{{ left }}
         <div
             :style="{ left: left + 'px' }"
             @mousedown="onMouseDown"
@@ -27,11 +28,13 @@ export default {
             const startX = e.clientX
             //起始位置
             const startLeft = this.left
+            // 设置一次移动10px
+            const grid = 10
             // --- mousemove事件
             const move = (moveEvent) => {
                 const curX = moveEvent.clientX
                 let distance = curX - startX
-                let left = startLeft + distance
+                let left = startLeft + Math.floor(distance / grid) * grid
                 // 边界处理 限制移动范围
                 if (left < 0) {
                     left = 0
