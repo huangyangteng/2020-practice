@@ -11,6 +11,11 @@ const routes = [
         redirect: '/vdr-test',
     },
     {
+        path: '/flv-test',
+        label: 'flv-test',
+        component: () => import('../flv-test/flv-test.vue'),
+    },
+    {
         path: '/gv6',
         label: 'gv6测试',
         component: () => import('../gv6/gv6.vue'),
