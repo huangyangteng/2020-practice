@@ -6,13 +6,24 @@
             :style="{
                 left: (curTime / duration) * 100 + '%',
             }"
+            @mousedown="dragBarMouseDown"
         >
             <div class="drag-bar"></div>
         </div>
         <!--        裁剪范围-->
-        <div :style="cutItemStyle" class="cut-item">
-            <div class="tri-bar left"></div>
-            <div class="tri-bar right"></div>
+        <div
+            @mousedown="mouseDownCutItem($event, 'center')"
+            :style="cutItemStyle"
+            class="cut-item"
+        >
+            <div
+                @mousedown="mouseDownCutItem($event, 'start')"
+                class="tri-bar left"
+            ></div>
+            <div
+                @mousedown="mouseDownCutItem($event, 'end')"
+                class="tri-bar right"
+            ></div>
         </div>
     </section>
 </template>
@@ -41,11 +52,38 @@ export default {
             default: 800,
         },
     },
+    watch: {
+        duration: {
+            immediate: true,
+            handler(duration) {
+                console.log(duration)
+                this.endTime = duration
+                // 初始化时，向父组件发送裁剪信息(0-duration)
+                this.emitRangeChange()
+            },
+        },
+        start: {
+            immediate: true,
+            handler(start) {
+                if (start && this.startTime !== start) {
+                    this.startTime = start
+                }
+            },
+        },
+        end: {
+            immediate: true,
+            handler(end) {
+                if (end && this.endTime !== end) {
+                    this.endTime = end
+                }
+            },
+        },
+    },
     data() {
         return {
             curTime: 0,
             startTime: 0,
-            endTime: this.duration,
+            endTime: 0,
             minRange: 0.2, //裁剪的最小距离
         }
     },
@@ -55,10 +93,6 @@ export default {
                 width: this.width + 'px',
             }
         },
-        grid() {
-            //一次最少移动0.1s
-            return this.timeToDis(0.1)
-        },
         cutItemStyle() {
             let range = this.endTime - this.startTime
             return {
@@ -66,13 +100,132 @@ export default {
                 left: (this.startTime / this.duration) * 100 + '%',
             }
         },
+        grid() {
+            //一次最少移动0.1s
+            return formatNum((0.1 * this.width) / this.duration)
+        },
     },
     methods: {
-        timeToDis(curTime) {
-            return formatNum((curTime * this.width) / this.duration)
+        dragBarMouseDown(e) {
+            e.stopPropagation()
+
+            const startX = e.clientX
+
+            //记录开始位置
+            const startSteps = this.curTime * 10
+
+            const move = (moveEvent) => {
+                const curX = moveEvent.clientX
+                let movedSteps = Math.floor((curX - startX) / this.grid)
+                if (movedSteps === 0) return
+                let endSteps = startSteps + movedSteps
+                let curTime = endSteps / 10
+                if (curTime < 0) {
+                    curTime = 0
+                }
+                if (curTime > this.duration) {
+                    curTime = this.duration
+                }
+                this.curTime = curTime
+                this.$emit('timeChange', formatNum(this.curTime))
+            }
+
+            const up = () => {
+                document.removeEventListener('mousemove', move)
+                document.removeEventListener('mouseup', up)
+            }
+
+            document.addEventListener('mousemove', move)
+            document.addEventListener('mouseup', up)
         },
-        disToTime(distance) {
-            return formatNum((distance * this.duration) / this.width)
+
+        mouseDownCutItem(e, type) {
+            e.preventDefault()
+            e.stopPropagation()
+
+            const startX = e.clientX
+
+            //开始时的步数
+            let startSteps = this.startTime * 10
+            if (type === 'end') {
+                startSteps = this.endTime * 10
+            }
+
+            const move = (moveEvent) => {
+                const curX = moveEvent.clientX
+                //移动的步数
+                let movedSteps = Math.floor((curX - startX) / this.grid)
+                if (movedSteps === 0) {
+                    return
+                }
+                //结束时的步数
+                let endSteps = startSteps + movedSteps
+                if (type === 'start') {
+                    //拖左边
+                    let startTime = endSteps / 10
+                    //左边界
+                    if (startTime < 0) startTime = 0
+                    //右边界
+                    if (startTime > this.endTime - this.minRange) {
+                        startTime = this.endTime - this.minRange
+                        // 提示用户最短时间间隔
+                    }
+                    this.startTime = startTime
+                    this.followMove('start')
+                } else if (type === 'end') {
+                    //拖右边
+                    let endTime = endSteps / 10
+                    //左边界
+                    if (endTime < this.startTime + this.minRange) {
+                        endTime = this.startTime + this.minRange
+                    }
+                    //右边界
+                    if (endTime > this.duration) {
+                        endTime = this.duration
+                    }
+                    this.endTime = endTime
+                    this.followMove('end')
+                } else {
+                    //拖中间
+                    let range = this.endTime - this.startTime
+                    let startTime = endSteps / 10
+                    let endTime = startTime + range
+                    if (startTime < 0) startTime = 0
+                    if (endTime > this.duration) endTime = this.duration
+                    if (endTime < range) endTime = range
+                    if (startTime > this.duration - range)
+                        startTime = this.duration - range
+                    this.startTime = startTime
+                    this.endTime = endTime
+                    this.followMove('start')
+                }
+                this.emitRangeChange()
+            }
+
+            const up = () => {
+                document.removeEventListener('mousemove', move)
+                document.removeEventListener('mouseup', up)
+            }
+
+            document.addEventListener('mousemove', move)
+            document.addEventListener('mouseup', up)
+        },
+        followMove(type) {
+            if (type === 'start') {
+                this.curTime = this.startTime
+            } else if (type === 'end') {
+                this.curTime = this.endTime
+            }
+            this.emitTimeChange()
+        },
+        emitRangeChange() {
+            this.$emit('rangeChange', {
+                startTime: formatNum(this.startTime),
+                endTime: formatNum(this.endTime),
+            })
+        },
+        emitTimeChange() {
+            this.$emit('timeChange', this.curTime)
         },
     },
 }

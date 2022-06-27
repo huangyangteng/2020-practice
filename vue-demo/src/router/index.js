@@ -11,6 +11,16 @@ const routes = [
         redirect: '/vdr-test',
     },
     {
+        path: '/scroll-drag',
+        label: 'scroll-drag',
+        component: () => import('../drag-demo/scroll-drag.vue'),
+    },
+    {
+        path: '/base-cut',
+        label: 'base-cut',
+        component: () => import('../drag-demo/test-base-cut.vue'),
+    },
+    {
         path: '/flv-test',
         label: 'flv-test',
         component: () => import('../flv-test/flv-test.vue'),
